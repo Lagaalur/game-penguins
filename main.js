@@ -64,7 +64,18 @@ let obs3;
 let obs4;
 let obs5;
 let arrow;
-
+let leftPressed = false;
+let rightPressed = false;
+let upPressed = false;
+let downPressed = false;
+let buttonsa;
+let buttonsb;
+let buttonsc;
+let buttonsd;
+let btnsa;
+let btnsb;
+let btnsc;
+let btnsd;
 // ================= PRELOAD =================
 
 
@@ -103,7 +114,10 @@ function preload() {
     });
 	
 	
-	
+	this.load.spritesheet('button', 'assets/button.png', {
+        frameWidth: 128,
+        frameHeight: 120
+    });
 	
 	
 	
@@ -141,9 +155,8 @@ function create() {
 	
 	
 	
-	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "BUT WHY?", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins2 ", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -225,10 +238,100 @@ arrow = this.add.sprite(
     this.scale.height * 0.80,
     'arrow'
 );
-
 arrow.setScale(0.4);
 arrow.setFrame(1);
 arrow.setDepth(1000);
+
+
+
+	let leftZone = this.add.zone(arrow.x - 50, arrow.y, 50, 100).setOrigin(0,0).setInteractive();
+    let rightZone = this.add.zone(arrow.x + 50, arrow.y, 50, 100).setOrigin(0,0).setInteractive();
+    let upZone = this.add.zone(arrow.x, arrow.y - 50, 100, 50).setOrigin(0,0).setInteractive();
+    let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
+
+
+     // event untuk update flag
+    leftZone.on('pointerdown', () => { leftPressed = true; });
+    leftZone.on('pointerup', () => { leftPressed = false; });
+
+    rightZone.on('pointerdown', () => { rightPressed = true; });
+    rightZone.on('pointerup', () => { rightPressed = false; });
+
+    upZone.on('pointerdown', () => { upPressed = true; });
+    upZone.on('pointerup', () => { upPressed = false; });
+
+    downZone.on('pointerdown', () => { downPressed = true; });
+    downZone.on('pointerup', () => { downPressed = false; });
+
+    // optional: enable multi-touch
+    this.input.addPointer(2);
+
+
+
+buttonsa = this.add.sprite(
+    this.scale.width * 0.1,
+    this.scale.height * 0.75,
+    'button'
+);
+buttonsa.setScale(0.4);
+buttonsa.setFrame(3);
+buttonsa.setDepth(1000);
+
+
+
+
+buttonsb = this.add.sprite(
+    this.scale.width * 0.18,
+    this.scale.height * 0.75,
+    'button'
+);
+buttonsb.setScale(0.4);
+buttonsb.setFrame(2);
+buttonsb.setDepth(1000);
+
+
+
+
+buttonsc = this.add.sprite(
+    this.scale.width * 0.18,
+    this.scale.height * 0.89,
+    'button'
+);
+buttonsc.setScale(0.4);
+buttonsc.setFrame(1);
+buttonsc.setDepth(1000);
+
+
+
+
+buttonsd = this.add.sprite(
+    this.scale.width * 0.1,
+    this.scale.height * 0.89,
+    'button'
+);
+buttonsd.setScale(0.4);
+buttonsd.setFrame(0);
+buttonsd.setDepth(1000);
+
+
+buttonsa.setInteractive();
+buttonsb.setInteractive();
+buttonsc.setInteractive();
+buttonsd.setInteractive();
+
+buttonsa.on('pointerdown', () => {btnsa = true;});
+buttonsa.on('pointerup', () => {btnsa = false;});
+  
+buttonsb.on('pointerdown', () => {btnsb = true;});
+buttonsb.on('pointerup', () => {btnsb = false;});
+
+buttonsc.on('pointerdown', () => {btnsc = true;});
+buttonsc.on('pointerup', () => {btnsc = false;});
+
+buttonsd.on('pointerdown', () => {btnsd = true;});
+buttonsd.on('pointerup', () => {btnsd = false;});
+
+
 
 
     // ===== PLAYER =====
@@ -1083,7 +1186,7 @@ function update() {
 		
  
     if (!gameStarted) {
-        if (Phaser.Input.Keyboard.JustDown(keyN)) {
+        if (Phaser.Input.Keyboard.JustDown(keyN)||btnsd) {
 
             gameStarted = true;
             titleText.setVisible(false);
@@ -1161,7 +1264,9 @@ function update() {
 let arrowFrame = 1; // default idle
 
 // ===== GERAK =====
-if (cursors.left.isDown) {
+
+
+if (cursors.left.isDown || leftPressed ) {
     player.setVelocityX(-200);
     player.anims.play('run', true);
     player.flipX = false;
@@ -1169,7 +1274,7 @@ if (cursors.left.isDown) {
     arrowFrame = 0;
 	//arrow.setScale(0.4);
 }
-else if (cursors.right.isDown) {
+else if (cursors.right.isDown||rightPressed) {
     player.setVelocityX(200);
     player.anims.play('run', true);
     player.flipX = true;
@@ -1185,13 +1290,25 @@ else {
 
 
 // ===== JUMP =====
-if(player.body.blocked.down && cursors.space.isDown  ) {
-   
-          //arrow.setFrame(3);
-		  player.setVelocityY(-500);
-        //  arrowFrame = 3;
-	
+
+
+
+if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsa)) {
+    player.setVelocityY(-500);
+	//arrow.setFrame(3);
+    //  arrowFrame = 3;	
 }
+
+
+
+
+
+
+
+   
+          
+	
+
 
 
 
