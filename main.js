@@ -4,7 +4,8 @@ const config = {
     //height: 600,
     //backgroundColor: '#87CEEB',
 
-   
+    input: {
+	activePointers: 100 },
 
 scale: {
         mode: Phaser.Scale.FIT,
@@ -76,6 +77,7 @@ let btnsa;
 let btnsb;
 let btnsc;
 let btnsd;
+let speed=0;
 // ================= PRELOAD =================
 
 
@@ -150,13 +152,8 @@ function create() {
    // this.scale.height * 0.7,  // 70% dari atas (dekat ground)
    
 	
-	
-	
-	
-	
-	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins2 ", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why150 ", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -253,9 +250,11 @@ arrow.setDepth(1000);
      // event untuk update flag
     leftZone.on('pointerdown', () => { leftPressed = true; });
     leftZone.on('pointerup', () => { leftPressed = false; });
+	leftZone.on('pointerout', () => { leftPressed = false; });
 
     rightZone.on('pointerdown', () => { rightPressed = true; });
     rightZone.on('pointerup', () => { rightPressed = false; });
+	leftZone.on('pointerout', () => { rightPressed = false; });
 
     upZone.on('pointerdown', () => { upPressed = true; });
     upZone.on('pointerup', () => { upPressed = false; });
@@ -264,7 +263,7 @@ arrow.setDepth(1000);
     downZone.on('pointerup', () => { downPressed = false; });
 
     // optional: enable multi-touch
-    this.input.addPointer(2);
+    //this.input.addPointer(2);
 
 
 
@@ -287,7 +286,7 @@ buttonsb = this.add.sprite(
 );
 buttonsb.setScale(0.4);
 buttonsb.setFrame(2);
-buttonsb.setDepth(1000);
+buttonsb.setDepth(4000);
 
 
 
@@ -322,8 +321,20 @@ buttonsd.setInteractive();
 buttonsa.on('pointerdown', () => {btnsa = true;});
 buttonsa.on('pointerup', () => {btnsa = false;});
   
-buttonsb.on('pointerdown', () => {btnsb = true;});
-buttonsb.on('pointerup', () => {btnsb = false;});
+//buttonsb.on('pointerdown', () => {btnsb = true;});
+//buttonsb.on('pointerup', () => {btnsb = false;});
+//buttonsb.on('pointerout', () => { btnsb = false; });
+
+
+
+//buttonsb.on('pointerover', () => { btnsb = true; });
+//buttonsb.on('pointerout', () => { btnsb = false; });
+
+// speed = buttonsb.input.pointerDown() ? 700 : 200;
+// speed = btnsb.input.pointerDown() ? 700 : 200;
+
+
+
 
 buttonsc.on('pointerdown', () => {btnsc = true;});
 buttonsc.on('pointerup', () => {btnsc = false;});
@@ -331,7 +342,7 @@ buttonsc.on('pointerup', () => {btnsc = false;});
 buttonsd.on('pointerdown', () => {btnsd = true;});
 buttonsd.on('pointerup', () => {btnsd = false;});
 
-
+this.input.addPointer(100);
 
 
     // ===== PLAYER =====
@@ -922,6 +933,10 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
     cursors = this.input.keyboard.createCursorKeys();
     keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     keyN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+	
+	
+	this.input.keyboard.removeAllListeners();
+this.input.keyboard.disableGlobalCapture();
 }
 
 // ================= SPAWN OBSTACLE =================
@@ -1155,6 +1170,14 @@ function update() {
  
  
         
+		
+		
+		
+		
+		
+		
+		
+		
         shadow.x=player.x;
 		shadow.y=this.scale.height - 107;
 		//obs.shadow2.x=obs.x;
@@ -1251,7 +1274,7 @@ function update() {
 		shadow.y=player.y+300;
 		//adow2 = false;
 		delay: 1500;
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+        if (Phaser.Input.Keyboard.JustDown(keyR)||btnsc) {
          
 			this.scene.restart();
 			
@@ -1265,28 +1288,57 @@ let arrowFrame = 1; // default idle
 
 // ===== GERAK =====
 
+//if(btnsb==HiGH
 
-if (cursors.left.isDown || leftPressed ) {
-    player.setVelocityX(-200);
+
+
+//speed = buttonsb.input.pointerDown() ? 700 : 200;
+
+
+
+
+speed = 200;
+
+if (buttonsb.input && this.input.activePointer.isDown &&
+    buttonsb.getBounds().contains(
+        this.input.activePointer.x,
+        this.input.activePointer.y
+    )) {
+    speed = 700;
+}
+
+
+
+
+//speed = btnsb ? 700 : 200; // cek tombol B sekali saja
+
+let arah=0;
+
+if (cursors.left.isDown || leftPressed) {
+    arah=-1;
     player.anims.play('run', true);
     player.flipX = false;
-
     arrowFrame = 0;
-	//arrow.setScale(0.4);
 }
-else if (cursors.right.isDown||rightPressed) {
-    player.setVelocityX(200);
+if (cursors.right.isDown || rightPressed) {
+    arah=1;
     player.anims.play('run', true);
     player.flipX = true;
-
     arrowFrame = 2;
-	//arrow.setScale(0.4);
+}
+if (
+  !(cursors.left.isDown || leftPressed) && 
+  !(cursors.right.isDown || rightPressed)
+   ) 
+   {
+    arah=0; // diam kalau tidak ada input
+    player.anims.play('run', false);
+    player.setFrame(11);
 }
 
-else {
-    player.anims.play('run', false);
-	//arrowFrame = 1;
-}
+
+
+ player.setVelocityX(arah*speed); 
 
 
 // ===== JUMP =====
@@ -1305,9 +1357,6 @@ if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.d
 
 
 
-   
-          
-	
 
 
 
