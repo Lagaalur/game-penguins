@@ -5,7 +5,7 @@ const config = {
     //backgroundColor: '#87CEEB',
 
     input: {
-	activePointers: 100 },
+	activePointers: 10 },
 
 scale: {
         mode: Phaser.Scale.FIT,
@@ -21,7 +21,7 @@ scale: {
    physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 900 },
+            gravity: { y: 900},
             debug: false
 			//debug: true
 			
@@ -83,7 +83,7 @@ let speed=0;
 
 function preload() {
 
-    // 🔥 PASTIKAN FILE ADA
+    // PASTIKAN FILE ADA
     // project folder:
     // index.html
     // game.js
@@ -153,7 +153,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why150 ", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why2000 ", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -251,16 +251,22 @@ arrow.setDepth(1000);
     leftZone.on('pointerdown', () => { leftPressed = true; });
     leftZone.on('pointerup', () => { leftPressed = false; });
 	leftZone.on('pointerout', () => { leftPressed = false; });
+	leftZone.on('pointercancel', () => { leftPressed = false; });
 
     rightZone.on('pointerdown', () => { rightPressed = true; });
     rightZone.on('pointerup', () => { rightPressed = false; });
-	leftZone.on('pointerout', () => { rightPressed = false; });
+	rightZone.on('pointerout', () => { rightPressed = false; });
+	rightZone.on('pointercancel', () => { rightPressed = false; });
 
     upZone.on('pointerdown', () => { upPressed = true; });
     upZone.on('pointerup', () => { upPressed = false; });
+	upZone.on('pointerout', () => { upPressed = false; });
+	upZone.on('pointercancel', () => { upPressed = false; });
 
     downZone.on('pointerdown', () => { downPressed = true; });
     downZone.on('pointerup', () => { downPressed = false; });
+	downZone.on('pointerout', () => { downPressed = false; });
+	downZone.on('pointercancel', () => { downPressed = false; });
 
     // optional: enable multi-touch
     //this.input.addPointer(2);
@@ -277,8 +283,6 @@ buttonsa.setFrame(3);
 buttonsa.setDepth(1000);
 
 
-
-
 buttonsb = this.add.sprite(
     this.scale.width * 0.18,
     this.scale.height * 0.75,
@@ -289,8 +293,6 @@ buttonsb.setFrame(2);
 buttonsb.setDepth(4000);
 
 
-
-
 buttonsc = this.add.sprite(
     this.scale.width * 0.18,
     this.scale.height * 0.89,
@@ -299,8 +301,6 @@ buttonsc = this.add.sprite(
 buttonsc.setScale(0.4);
 buttonsc.setFrame(1);
 buttonsc.setDepth(1000);
-
-
 
 
 buttonsd = this.add.sprite(
@@ -320,29 +320,31 @@ buttonsd.setInteractive();
 
 buttonsa.on('pointerdown', () => {btnsa = true;});
 buttonsa.on('pointerup', () => {btnsa = false;});
+buttonsa.on('pointerout', () => { btnsa = false; });
+buttonsa.on('pointercancel', () => { btnsa = false; });
   
-//buttonsb.on('pointerdown', () => {btnsb = true;});
-//buttonsb.on('pointerup', () => {btnsb = false;});
-//buttonsb.on('pointerout', () => { btnsb = false; });
-
-
-
+  
+buttonsb.on('pointerdown', () => {btnsb = true;});
+buttonsb.on('pointerup', () => {btnsb = false;});
+buttonsb.on('pointerout', () => { btnsb = false; });
+buttonsb.on('pointercancel', () => { btnsb = false; });
 //buttonsb.on('pointerover', () => { btnsb = true; });
-//buttonsb.on('pointerout', () => { btnsb = false; });
-
-// speed = buttonsb.input.pointerDown() ? 700 : 200;
-// speed = btnsb.input.pointerDown() ? 700 : 200;
-
-
 
 
 buttonsc.on('pointerdown', () => {btnsc = true;});
 buttonsc.on('pointerup', () => {btnsc = false;});
+buttonsc.on('pointerout', () => { btnsc = false; });
+buttonsc.on('pointercancel', () => { btnsc = false; });
+
 
 buttonsd.on('pointerdown', () => {btnsd = true;});
 buttonsd.on('pointerup', () => {btnsd = false;});
+buttonsd.on('pointerout', () => { btnsd = false; });
+buttonsd.on('pointercancel', () => { btnsd = false; });
 
-this.input.addPointer(100);
+
+
+this.input.addPointer(10);
 
 
     // ===== PLAYER =====
@@ -428,13 +430,6 @@ this.anims.create({
 
 
 
-
-
-
-
-
-
-
 this.anims.create({
     key: 'obstacleMove2',
     frames: this.anims.generateFrameNumbers('obstacle', {
@@ -443,13 +438,6 @@ this.anims.create({
     frameRate: 5,
     repeat: 0
 });
-
-
-
-
-
-
-
 
 
 
@@ -474,13 +462,6 @@ this.anims.create({
         frameRate: 10,
         repeat: -1
     });
-
-
-
-
-
-
-
 
 
 
@@ -601,15 +582,6 @@ this.physics.add.collider(obstacles2, ground, (obstacleObj2) => {
     });
 
 });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -862,32 +834,6 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 
 
     // ===== SCORE =====
@@ -1169,14 +1115,6 @@ function spawnObstacle5() {
 function update() {
  
  
-        
-		
-		
-		
-		
-		
-		
-		
 		
         shadow.x=player.x;
 		shadow.y=this.scale.height - 107;
@@ -1193,18 +1131,6 @@ function update() {
      //       ob.shadow2.y = ob.y + 20;
      //   }
    // });
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
  
@@ -1298,15 +1224,15 @@ let arrowFrame = 1; // default idle
 
 
 speed = 200;
-
+/*
 if (buttonsb.input && this.input.activePointer.isDown &&
     buttonsb.getBounds().contains(
         this.input.activePointer.x,
         this.input.activePointer.y
     )) {
     speed = 700;
-}
-
+} */
+if(btnsb==true){speed = 700;}
 
 
 
@@ -1353,17 +1279,6 @@ if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.d
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 // ===== APPLY FRAME + SAFE TWEEN =====
 if (arrowFrame !== lastArrowFrame){
 
@@ -1384,4 +1299,27 @@ if (arrowFrame !== lastArrowFrame){
     lastArrowFrame = arrowFrame;
 	//arrow.setScale(0.4);
 }
+
+
+
+if (!this.input.activePointer.isDown) {
+  btnsc = false;
+  btnsa=false;
+  btnsb=false;
+  btnsd=false;
+  leftPressed=false;
+  rightPressed=false;
+  upPressed=false;
+  
+}
+
+
+
+
+
+
+
+
+
+
 }
