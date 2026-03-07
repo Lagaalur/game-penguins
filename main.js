@@ -46,8 +46,8 @@ let obstacles3;
 let obstacles4;
 let obstacles5;
 let cursors;
-let keyR;
-let keyN;
+let keyX;
+let keyO;
 let score = 0;
 let scoreText;
 let gameOver = false;
@@ -153,7 +153,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why2000 ", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -177,7 +177,7 @@ function create() {
 		
     }).setOrigin(0.5);
 
-    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press N to Start", {
+    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press X to Start", {
         fontSize: "15px",
         //fill: "#00ffcc"
 		//fill: "#66CCFF",
@@ -231,20 +231,20 @@ floor.setVisible(false);
    // Button
 
 arrow = this.add.sprite(
-    this.scale.width * 0.90,
-    this.scale.height * 0.80,
-    'arrow'
+this.scale.width * 0.85,
+this.scale.height * 0.74,
+'arrow'
 );
-arrow.setScale(0.4);
+arrow.setScale(0.6);
 arrow.setFrame(1);
 arrow.setDepth(1000);
 
 
 
-	let leftZone = this.add.zone(arrow.x - 50, arrow.y, 50, 100).setOrigin(0,0).setInteractive();
-    let rightZone = this.add.zone(arrow.x + 50, arrow.y, 50, 100).setOrigin(0,0).setInteractive();
-    let upZone = this.add.zone(arrow.x, arrow.y - 50, 100, 50).setOrigin(0,0).setInteractive();
-    let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
+	let leftZone = this.add.zone(arrow.x - 80, arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
+    let rightZone = this.add.zone(arrow.x + 31, arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
+    let upZone = this.add.zone(arrow.x-30, arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
+   // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
 
 
      // event untuk update flag
@@ -263,16 +263,16 @@ arrow.setDepth(1000);
 	upZone.on('pointerout', () => { upPressed = false; });
 	upZone.on('pointercancel', () => { upPressed = false; });
 
-    downZone.on('pointerdown', () => { downPressed = true; });
+  /*downZone.on('pointerdown', () => { downPressed = true; });
     downZone.on('pointerup', () => { downPressed = false; });
 	downZone.on('pointerout', () => { downPressed = false; });
-	downZone.on('pointercancel', () => { downPressed = false; });
+	downZone.on('pointercancel', () => { downPressed = false; }); 
 
     // optional: enable multi-touch
     //this.input.addPointer(2);
+*/
 
-
-
+/*
 buttonsa = this.add.sprite(
     this.scale.width * 0.1,
     this.scale.height * 0.75,
@@ -291,33 +291,33 @@ buttonsb = this.add.sprite(
 buttonsb.setScale(0.4);
 buttonsb.setFrame(2);
 buttonsb.setDepth(4000);
-
+*/
 
 buttonsc = this.add.sprite(
-    this.scale.width * 0.18,
-    this.scale.height * 0.89,
+    this.scale.width * 0.16,
+    this.scale.height * 0.85,
     'button'
 );
-buttonsc.setScale(0.4);
+buttonsc.setScale(0.7);
 buttonsc.setFrame(1);
 buttonsc.setDepth(1000);
 
 
 buttonsd = this.add.sprite(
     this.scale.width * 0.1,
-    this.scale.height * 0.89,
+    this.scale.height * 0.70,
     'button'
 );
-buttonsd.setScale(0.4);
+buttonsd.setScale(0.7);
 buttonsd.setFrame(0);
 buttonsd.setDepth(1000);
 
 
-buttonsa.setInteractive();
-buttonsb.setInteractive();
+//buttonsa.setInteractive();
+//buttonsb.setInteractive();
 buttonsc.setInteractive();
 buttonsd.setInteractive();
-
+/*
 buttonsa.on('pointerdown', () => {btnsa = true;});
 buttonsa.on('pointerup', () => {btnsa = false;});
 buttonsa.on('pointerout', () => { btnsa = false; });
@@ -329,7 +329,7 @@ buttonsb.on('pointerup', () => {btnsb = false;});
 buttonsb.on('pointerout', () => { btnsb = false; });
 buttonsb.on('pointercancel', () => { btnsb = false; });
 //buttonsb.on('pointerover', () => { btnsb = true; });
-
+*/
 
 buttonsc.on('pointerdown', () => {btnsc = true;});
 buttonsc.on('pointerup', () => {btnsc = false;});
@@ -664,7 +664,7 @@ this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
     });
 
     //gameOver = true;
-    //scoreText.setText("He died - Score: " + score + " (Press R)");
+    //scoreText.setText("He died - Score: " + score + " (Press O)");
 
 });
 
@@ -877,12 +877,12 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 	
 	
     cursors = this.input.keyboard.createCursorKeys();
-    keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-    keyN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+    keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+    keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 	
 	
 	this.input.keyboard.removeAllListeners();
-this.input.keyboard.disableGlobalCapture();
+    this.input.keyboard.disableGlobalCapture();
 }
 
 // ================= SPAWN OBSTACLE =================
@@ -1135,7 +1135,7 @@ function update() {
 		
  
     if (!gameStarted) {
-        if (Phaser.Input.Keyboard.JustDown(keyN)||btnsd) {
+        if (Phaser.Input.Keyboard.JustDown(keyX)||btnsd) {
 
             gameStarted = true;
             titleText.setVisible(false);
@@ -1200,7 +1200,7 @@ function update() {
 		shadow.y=player.y+300;
 		//adow2 = false;
 		delay: 1500;
-        if (Phaser.Input.Keyboard.JustDown(keyR)||btnsc) {
+        if (Phaser.Input.Keyboard.JustDown(keyO)||btnsc) {
          
 			this.scene.restart();
 			
@@ -1232,7 +1232,7 @@ if (buttonsb.input && this.input.activePointer.isDown &&
     )) {
     speed = 700;
 } */
-if(btnsb==true){speed = 700;}
+if(btnsc==true){speed = 700;}
 
 
 
@@ -1271,7 +1271,7 @@ if (
 
 
 
-if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsa)) {
+if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsd)) {
     player.setVelocityY(-500);
 	//arrow.setFrame(3);
     //  arrowFrame = 3;	
@@ -1290,19 +1290,19 @@ if (arrowFrame !== lastArrowFrame){
 
     this.tweens.add({
         targets: arrow ,
-        scale: 0.4,
+        scale: 0.6,
         duration: 60,
         yoyo: true,
         ease: 'Quad.easeOut'
     });
 
     lastArrowFrame = arrowFrame;
-	//arrow.setScale(0.4);
+	
 }
 
 
 
-if (!this.input.activePointer.isDown) {
+/*if (!this.input.activePointer.isDown) {
   btnsc = false;
   btnsa=false;
   btnsb=false;
@@ -1311,7 +1311,7 @@ if (!this.input.activePointer.isDown) {
   rightPressed=false;
   upPressed=false;
   
-}
+}*/
 
 
 
