@@ -6,6 +6,7 @@ const config = {
 
     input: {
 	activePointers: 10 },
+	//pixelArt: true,
 
 scale: {
         mode: Phaser.Scale.FIT,
@@ -23,7 +24,7 @@ scale: {
         arcade: {
             gravity: { y: 900},
             debug: false
-			//debug: true
+		   //  debug: true
 			
         }
     },
@@ -46,8 +47,8 @@ let obstacles3;
 let obstacles4;
 let obstacles5;
 let cursors;
-let keyX;
-let keyO;
+let keyA;
+let keyB;
 let score = 0;
 let scoreText;
 let gameOver = false;
@@ -153,7 +154,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins why", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins but why", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -177,7 +178,7 @@ function create() {
 		
     }).setOrigin(0.5);
 
-    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press X to Start", {
+    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start", {
         fontSize: "15px",
         //fill: "#00ffcc"
 		//fill: "#66CCFF",
@@ -299,7 +300,7 @@ buttonsc = this.add.sprite(
     'button'
 );
 buttonsc.setScale(0.7);
-buttonsc.setFrame(1);
+buttonsc.setFrame(5);
 buttonsc.setDepth(1000);
 
 
@@ -309,7 +310,7 @@ buttonsd = this.add.sprite(
     'button'
 );
 buttonsd.setScale(0.7);
-buttonsd.setFrame(0);
+buttonsd.setFrame(4);
 buttonsd.setDepth(1000);
 
 
@@ -440,16 +441,32 @@ this.anims.create({
 });
 
 
-
+/*
 this.anims.create({
     key: 'die',
     frames: this.anims.generateFrameNumbers('player', {
         start: 18,
         end: 18
     }),
+	
     frameRate: 10,
     repeat: -1
 });
+
+*/
+
+
+this.anims.create({
+    key: 'die',
+    frames: [{ key: 'player', frame: 18 }],
+    frameRate: 10,
+    repeat: -1
+});
+
+
+
+
+
 
 
 
@@ -714,6 +731,8 @@ obstacles3 = this.physics.add.group();
         obstacleObj3.body.enable = false;
 
         obstacleObj3.anims.play('die', true);
+		//obstacleObj3.setFrame(18);
+        obstacleObj3.setCrop(2, 0, 78, 80); 
 
 		obstacleObj3.scene.time.delayedCall(6000, () => {
 
@@ -753,6 +772,8 @@ obstacles3 = this.physics.add.group();
         obstacleObj3b.body.enable = false;
 
         obstacleObj3b.anims.play('die', true);
+		//obstacleObj3b.setFrame(18);
+         obstacleObj3b.setCrop(2, 0, 78, 80);  
 
 		obstacleObj3b.scene.time.delayedCall(6000, () => {
 
@@ -774,7 +795,7 @@ obstacles3 = this.physics.add.group();
 		//player.setVelocityX(-700);
 		//obstacleObj.setVelocityX(0);
 		//obstacleObj.anims.play('obstacleMove2', false);
-		//scoreText.setText("He died - Score: " + score + " (Press R)");
+		//scoreText.setText("He died - Score: " + score + " (Press B)");
 		//this.physics.pause();
 		
 		
@@ -795,6 +816,8 @@ this.physics.add.collider(obstacles4, obstacles3, (Objj, obstacleObj3c) => {
         obstacleObj3c.body.enable = false;
 
         obstacleObj3c.anims.play('die', true);
+		 //obstacleObj3c.setFrame(18);
+         obstacleObj3c.setCrop(2, 0, 78, 80); 
 		
 		obstacleObj3c.scene.time.delayedCall(6000, () => {
 
@@ -821,6 +844,8 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
         obstacleObj3d.body.enable = false;
 
         obstacleObj3d.anims.play('die', true);
+		//obstacleObj3d.setFrame(18);
+         obstacleObj3d.setCrop(2, 0, 78, 80);  
 
 		obstacleObj3d.scene.time.delayedCall(6000, () => {
 
@@ -877,9 +902,9 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 	
 	
     cursors = this.input.keyboard.createCursorKeys();
-    keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
-    keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
-	
+    keyB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+    keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+	 
 	
 	this.input.keyboard.removeAllListeners();
     this.input.keyboard.disableGlobalCapture();
@@ -1135,7 +1160,7 @@ function update() {
 		
  
     if (!gameStarted) {
-        if (Phaser.Input.Keyboard.JustDown(keyX)||btnsd) {
+        if (Phaser.Input.Keyboard.JustDown(keyA)||btnsd) {
 
             gameStarted = true;
             titleText.setVisible(false);
@@ -1197,10 +1222,11 @@ function update() {
 				
 		player.anims.play('run', false);
 		player.anims.play('die', true);
+		player.setCrop(2, 0, 78, 80); 
 		shadow.y=player.y+300;
 		//adow2 = false;
 		delay: 1500;
-        if (Phaser.Input.Keyboard.JustDown(keyO)||btnsc) {
+        if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
          
 			this.scene.restart();
 			
@@ -1223,7 +1249,7 @@ let arrowFrame = 1; // default idle
 
 
 
-speed = 200;
+
 /*
 if (buttonsb.input && this.input.activePointer.isDown &&
     buttonsb.getBounds().contains(
@@ -1232,8 +1258,15 @@ if (buttonsb.input && this.input.activePointer.isDown &&
     )) {
     speed = 700;
 } */
-if(btnsc==true){speed = 700;}
+if(btnsc==true)
+{speed = 700;
+buttonsc.setFrame(9);
 
+}
+else{buttonsc.setFrame(5);
+speed = 200;
+
+}
 
 
 //speed = btnsb ? 700 : 200; // cek tombol B sekali saja
@@ -1272,12 +1305,14 @@ if (
 
 
 if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsd)) {
-    player.setVelocityY(-500);
+    player.setVelocityY(-500);  
 	//arrow.setFrame(3);
     //  arrowFrame = 3;	
 }
+if(!(btnsd) && !(cursors.space.isDown) ) {    buttonsd.setFrame(4);    }                
+else{buttonsd.setFrame(8);}
 
-
+if(upPressed ) {arrowFrame=3;}
 
 // ===== APPLY FRAME + SAFE TWEEN =====
 if (arrowFrame !== lastArrowFrame){
