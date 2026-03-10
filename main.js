@@ -79,6 +79,9 @@ let btnsb;
 let btnsc;
 let btnsd;
 let speed=0;
+let penguin1=0;
+let penguin2=0;
+let animasiplayer;
 // ================= PRELOAD =================
 
 
@@ -154,7 +157,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins but why", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -353,8 +356,8 @@ this.input.addPointer(10);
      //player = this.physics.add.sprite(100, 200, 'player');
 	 //player = this.physics.add.sprite(this.scale.height - 300, this.scale.width - 100, 'player');
 	player = this.physics.add.sprite(
-    this.scale.width * 0.1,   // 10% dari kiri
-    this.scale.height * 0.2,  // 70% dari atas (dekat ground)
+    this.scale.width * 0.5,   // 10% dari kiri
+    this.scale.height * 0.5,  // 70% dari atas (dekat ground)
     'player'
 );
 
@@ -517,8 +520,8 @@ this.physics.add.collider(player, obstacles, (playerObj, obstacleObj) => {
 
     });
 
-    //gameOver = true;
-    //scoreText.setText("He died - Score: " + score + " (Press R)");
+    gameOver = true;
+    scoreText.setText("He died - Score: " + score + " (Press B)");
 
 });
 
@@ -573,8 +576,8 @@ this.physics.add.collider(player, obstacles2, (playerObj2, obstacleObj2) => {
 
     });
 
-    //gameOver = true;
-    //scoreText.setText("He died - Score: " + score + " (Press R!)");
+    gameOver = true;
+    scoreText.setText("He died - Score: " + score + " (Press B!)");
 
 });
 
@@ -626,8 +629,8 @@ this.physics.add.collider(player, obstacles4, (playerObj4, obstacleObj4) => {
 
     });
 
-    //gameOver = true;
-    //scoreText.setText("He died - Score: " + score + " (Press R)");
+    gameOver = true;
+    scoreText.setText("He died - Score: " + score + " (Press B)");
 
 });
 
@@ -680,8 +683,8 @@ this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
 
     });
 
-    //gameOver = true;
-    //scoreText.setText("He died - Score: " + score + " (Press O)");
+    gameOver = true;
+    scoreText.setText("He died - Score: " + score + " (Press B)");
 
 });
 
@@ -893,6 +896,7 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
             if (!gameOver && gameStarted) {
                 score++;
                 scoreText.setText("Score: " + score);
+				
             }
         },
         loop: true
@@ -1003,9 +1007,26 @@ function spawnObstacle3() {
      return;
 	}
 	
-	let obs3 = this.physics.add.sprite(this.scale.width * 0.95, this.scale.height * 0.6, 'player');
+	 obs3 = this.physics.add.sprite(this.scale.width * 0.95, this.scale.height * 0.6, 'player');
 	
-     
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    obs3.setFrame(11);
     //shadow2 = this.add.ellipse(obs.x, obs.y +30 , 34,5, 0x000000, 0.3);
 	
 	//obs3.shadow2=shadow2;
@@ -1019,14 +1040,15 @@ function spawnObstacle3() {
 	this.physics.add.collider(obs3, ground);
 
     
-    obs3.body.setAllowGravity(false);
+    obs3.body.setAllowGravity(true);
 	
 
-    obs3.anims.play('run', true);
-
+   // obs3.anims.play('run', true);
+    //obs3.setFrame(11);
     obstacles3.add(obs3);
-			
-	obstacles3.setVelocityX(-100); 
+	penguin2= penguin2+1;
+	//obstacles3.setVelocityX(-100); 
+	
 	
 }
 
@@ -1187,19 +1209,19 @@ function update() {
 			
 			this.time.addEvent({
                 delay: 1500,
-                callback: spawnObstacle3,
-                callbackScope: this,
-                loop: true
-            });
-			
-			
-			this.time.addEvent({
-                delay: 1500,
                 callback: spawnObstacle4,
                 callbackScope: this,
                 loop: true
             });
 			
+	/*		if(penguin2<1) {
+			this.time.addEvent({
+                delay: 1500,
+                callback: spawnObstacle3,
+                callbackScope: this,
+                loop: true
+            });penguin2+=1;
+			} */
 			
 			this.time.addEvent({
                 delay: 1500,
@@ -1217,17 +1239,64 @@ function update() {
         }
         return;
     }
+	
+	
+	 if (penguin2<1) {
+        spawnObstacle3.call(this);
+        this.spawn3Done = true; // pastikan hanya sekali
+    }
+	
+	
+//const groundY = 500; // ganti sesuai posisi ground
+
+//let groundY = 500; // ground level, sesuaikan
+
+const groundY = 500; // ground level, sesuaikan
+
+if (obs3) {
+
+    // trigger follow saat disentuh player
+    if (!obs3.following && Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), obs3.getBounds())) {
+        obs3.following = true;
+    }
+
+    if (obs3.following) {
+
+        // horizontal velocity ikut player
+        obs3.body.velocity.x = player.body.velocity.x;
+
+        // vertical velocity ikut player saat lompat
+        if (player.y < groundY) {
+            obs3.body.velocity.y = player.body.velocity.y;
+        }
+
+        // koreksi X supaya menempel persis
+        obs3.x = player.x;
+
+        // koreksi Y saat player di ground, obs3 gravity handle landing
+        if (player.y >= groundY) {
+            obs3.y = groundY - obs3.height/2;
+        }
+    }
+}
+    
 
     if (gameOver) {
 				
 		player.anims.play('run', false);
 		player.anims.play('die', true);
+		obs3.anims.play('run', false);
+		obs3.anims.play('die', true);
 		player.setCrop(2, 0, 78, 80); 
-		shadow.y=player.y+300;
+		//shadow.y=player.y+300;
 		//adow2 = false;
-		delay: 1500;
+		//delay: 1500;
         if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
-         
+             speed=0;
+ penguin1=0;
+ penguin2=0;
+			
+			
 			this.scene.restart();
 			
 	    }
