@@ -1,44 +1,60 @@
 
+import { doc, getDoc, setDoc } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
 let playerName = localStorage.getItem("playerName");
 
 if(!playerName)
 {
-playerName = prompt("Masukkan nama");
+playerName = prompt("Masukkan nama kamu please");
 localStorage.setItem("playerName",playerName);
 }
+
+
+
+
+
+
+
+
 
 
 async function saveScore(score)
 {
 
-const playerRef = db.collection("players").doc(playerName);
+const playerRef = doc(db,"players",playerName);
 
-const doc = await playerRef.get();
+const snapshot = await getDoc(playerRef);
 
-if(!doc.exists)
+if(!snapshot.exists())
 {
-await playerRef.set({
+
+await setDoc(playerRef,{
 name:playerName,
 bestScore:score
 });
+
 }
 else
 {
-let oldScore = doc.data().bestScore;
+
+let oldScore = snapshot.data().bestScore;
 
 if(score > oldScore)
 {
-await playerRef.set({
+
+await setDoc(playerRef,{
 name:playerName,
 bestScore:score
 });
-}
-}
 
 }
 
+}
 
-
+}
 
 
 
@@ -207,7 +223,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
