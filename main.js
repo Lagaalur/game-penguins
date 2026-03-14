@@ -131,6 +131,11 @@ function preload() {
 
 }
 
+
+
+
+
+
 // ================= CREATE =================
 
 
@@ -157,7 +162,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -181,7 +186,7 @@ function create() {
 		
     }).setOrigin(0.5);
 
-    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start", {
+    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start!!", {
         fontSize: "15px",
         //fill: "#00ffcc"
 		//fill: "#66CCFF",
@@ -543,6 +548,8 @@ this.physics.add.collider(obstacles, ground, (obstacleObj) => {
         //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
         obstacleObj.destroy();
+		
+		
 
     });
 
@@ -741,7 +748,16 @@ obstacles3 = this.physics.add.group();
 
         //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj3.destroy();
+       // obstacleObj3.destroy();
+	    obstacleObj3.destroy();
+		penguin2=0;
+	
+
+        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+      
+      
+		
+		
 		
 		});
 		
@@ -782,11 +798,20 @@ obstacles3 = this.physics.add.group();
 
         //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
+        //obstacleObj3b.destroy();
+		
+		
+		
+
+        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+
         obstacleObj3b.destroy();
+		penguin2=0;
+		
 		
 		});
 		
-		
+		});
 		
 
 		//obstacleObj.setSize(50,50);
@@ -802,7 +827,7 @@ obstacles3 = this.physics.add.group();
 		//this.physics.pause();
 		
 		
-    });
+   
 
 
 
@@ -825,14 +850,28 @@ this.physics.add.collider(obstacles4, obstacles3, (Objj, obstacleObj3c) => {
 		obstacleObj3c.scene.time.delayedCall(6000, () => {
 
         //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+		obstacleObj3c.destroy();
+       // obstacleObj3c.destroy();
+		penguin2=0;
+		
+	
 
-        obstacleObj3c.destroy();
+        
+		
+		//spawnObstacle3.call(this);
+       
+		
+		
+		
+		
+		
+		
 		
 		});
 
-					
+		});			
 		
-    });
+   
 
 
 
@@ -853,14 +892,24 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 		obstacleObj3d.scene.time.delayedCall(6000, () => {
 
         //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
-
         obstacleObj3d.destroy();
+       // obstacleObj3d.destroy();
+		penguin2=0;
 		
-		});			
 		
+
+        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+
+      
+		 
+
+
     });
-
-
+		
+	});			
+		
+  
+   
 
 
 
@@ -869,7 +918,7 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 	
 	
 	
-    scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "Score =  0", {
+		scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + score + " penguin", {
         fontSize: "20px",
         //fontSize: "22px",
         //fill: "#00ffcc"
@@ -894,8 +943,8 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
         delay: 1000,
         callback: () => {
             if (!gameOver && gameStarted) {
-                score++;
-                scoreText.setText("Score: " + score);
+                
+                scoreText.setText("last he save " + score + " penguin");
 				
             }
         },
@@ -922,10 +971,10 @@ function spawnObstacle() {
     if (gameOver) return;
 
     let obs = obstacles.create(
-    this.scale.width + Phaser.Math.Between(0, 50),
-    Phaser.Math.Between(-150, -50),
-    'obstacle'
-);
+        secureBetween(0, this.scale.width),   // random selebar layar
+        secureBetween(-120, -40),             // muncul dari atas layar
+        'obstacle'
+    );
 
     // FLAG HIT
     obs.hitTriggered = false;
@@ -933,21 +982,21 @@ function spawnObstacle() {
     // PHYSICS
     obs.body.setAllowGravity(true);
 
-    // TRAJECTORY PARABOLA RANDOM
-    let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
-    let speed = Phaser.Math.Between(-50, -1);
+    // TRAJECTORY
+    let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
+    let speed = secureBetween(80, 160);
 
     obs.setVelocity(
-        -Math.cos(angle) * speed,
-        -Math.sin(angle) * speed
+        Math.sin(angle) * speed,   // gerakan kiri kanan
+        speed                      // jatuh ke bawah
     );
 
     // VISUAL
-	
     obs.setScale(0.5);
     obs.setOrigin(0.5, 0.5);
     obs.setSize(30,30);
-    // ANIM TERBANG
+
+    // ANIM
     obs.anims.play('obstacleMove', true);
 
     // SHADOW
@@ -962,11 +1011,17 @@ function spawnObstacle2() {
 
     if (gameOver) return;
 
-    let obs2 = obstacles2.create(
+ /*   let obs2 = obstacles2.create(
     this.scale.width + Phaser.Math.Between(80, 200),
     Phaser.Math.Between(-150, -50),
     'obstacle'
-);
+); */
+
+let obs2 = obstacles2.create(
+        secureBetween(0, this.scale.width),   // random selebar layar
+        secureBetween(-120, -40),             // muncul dari atas layar
+        'obstacle'
+    );
 
     // FLAG HIT
     obs2.hitTriggered = false;
@@ -975,12 +1030,16 @@ function spawnObstacle2() {
     obs2.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-    let angle = Phaser.Math.DegToRad(Phaser.Math.Between(60, 70));
-    let speed = Phaser.Math.Between(100, 1000);
+   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(60, 70));
+   // let speed = Phaser.Math.Between(100, 1000);
+	
+	// TRAJECTORY
+    let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
+    let speed = secureBetween(80, 160);
 
     obs2.setVelocity(
-        -Math.cos(angle) * speed,
-        -Math.sin(angle) * speed
+        Math.sin(angle) * speed,   // gerakan kiri kanan
+        speed                      // jatuh ke bawah
     );
 
     // VISUAL
@@ -1061,11 +1120,17 @@ function spawnObstacle4() {
 
     if (gameOver) return;
 
-    let obs4 = obstacles4.create(
+  /*  let obs4 = obstacles4.create(
     this.scale.width + Phaser.Math.Between(-100, -500),
     Phaser.Math.Between(0, 0),
     'obstacle2'
-);
+);*/
+
+let obs4 = obstacles4.create(
+        secureBetween(0, this.scale.width),   // random selebar layar
+        secureBetween(-120, -40),             // muncul dari atas layar
+        'obstacle2'
+    );
 
     // FLAG HIT
     obs4.hitTriggered = false;
@@ -1074,12 +1139,16 @@ function spawnObstacle4() {
     obs4.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-    let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
-    let speed = Phaser.Math.Between(-50, -1);
+   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
+    //let speed = Phaser.Math.Between(-50, -1);
+	// ANGLE PARABOLA
+    // TRAJECTORY
+    let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
+    let speed = secureBetween(80, 160);
 
     obs4.setVelocity(
-        -Math.cos(angle) * 1,
-        -Math.sin(angle) * 1
+        Math.sin(angle) * speed,   // gerakan kiri kanan
+        speed                      // jatuh ke bawah
     );
 
     // VISUAL
@@ -1107,11 +1176,18 @@ function spawnObstacle5() {
 
     if (gameOver) return;
 
-    let obs5 = obstacles5.create(
+  /*  let obs5 = obstacles5.create(
     this.scale.width + Phaser.Math.Between(50, -100),
     Phaser.Math.Between(-100, 0),
     'obstacle2'
-);
+); */
+
+let obs5 = obstacles5.create(
+        secureBetween(0, this.scale.width),   // random selebar layar
+        secureBetween(-120, -40),             // muncul dari atas layar
+        'obstacle2'
+    );
+
 
     // FLAG HIT
     obs5.hitTriggered = false;
@@ -1120,13 +1196,16 @@ function spawnObstacle5() {
     obs5.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-    let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
-    let speed = Phaser.Math.Between(-50, -1);
+   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
+   // let speed = Phaser.Math.Between(-50, -1);
+	
+	// TRAJECTORY
+    let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
+    let speed = secureBetween(80, 160);
 
     obs5.setVelocity(
-        -Math.cos(angle) * 1,
-        -Math.sin(angle) * 1
-		
+        Math.sin(angle) * speed,   // gerakan kiri kanan
+        speed                      // jatuh ke bawah
     );
 
     // VISUAL
@@ -1143,10 +1222,15 @@ function spawnObstacle5() {
 }
 
 
+// ================= RNG =================
 
 
-
-
+function secureBetween(min, max) {
+    const range = max - min + 1;
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return min + (array[0] % range);
+}
 
 
 
@@ -1191,7 +1275,7 @@ function update() {
  
 
             this.time.addEvent({
-                delay: 1500,
+                delay:  secureBetween(1500, 4000),
                 callback: spawnObstacle,
                 callbackScope: this,
                 loop: true
@@ -1200,7 +1284,7 @@ function update() {
 			
 			
 			this.time.addEvent({
-                delay: 1500,
+                delay:  secureBetween(500, 4000),
                 callback: spawnObstacle2,
                 callbackScope: this,
                 loop: true
@@ -1208,7 +1292,7 @@ function update() {
 			
 			
 			this.time.addEvent({
-                delay: 1500,
+                delay:  secureBetween(1500, 4000),
                 callback: spawnObstacle4,
                 callbackScope: this,
                 loop: true
@@ -1224,7 +1308,7 @@ function update() {
 			} */
 			
 			this.time.addEvent({
-                delay: 1500,
+                delay:  secureBetween(1500, 4000),
                 callback: spawnObstacle5,
                 callbackScope: this,
                 loop: true
@@ -1241,9 +1325,10 @@ function update() {
     }
 	
 	
-	 if (penguin2<1) {
+	 if (penguin2==0) {
         spawnObstacle3.call(this);
         this.spawn3Done = true; // pastikan hanya sekali
+		obs3.timerStarted = false;
     }
 	
 	
@@ -1257,7 +1342,9 @@ if (obs3) {
 
     // trigger follow saat disentuh player
     if (!obs3.following && Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), obs3.getBounds())) {
-        obs3.following = true;
+       
+     if(penguin1==0){
+	 obs3.following = true;}
     }
 
     if (obs3.following) {
@@ -1279,7 +1366,43 @@ if (obs3) {
         }
     }
 }
-    
+   
+
+
+if (obs3.x <= 50 && !obs3.timerStarted)
+{     
+    // Set kecepatan dan state
+    obs3.body.velocity.x = -100;
+    penguin2 = 0;
+    obs3.following = false;
+    penguin1 = 1;
+    score++;
+    // Tandai bahwa timer sudah dimulai supaya tidak terulang tiap frame
+    obs3.timerStarted = true;
+
+    // Timer delay 6000ms (6 detik)
+    this.time.delayedCall(200, () => {
+       // obs3.destroy();
+	    
+        penguin1 = 0;
+    }, [], this);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 
     if (gameOver) {
 				
@@ -1293,8 +1416,8 @@ if (obs3) {
 		//delay: 1500;
         if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
              speed=0;
- penguin1=0;
- penguin2=0;
+			 penguin1=0;
+			 penguin2=0;
 			
 			
 			this.scene.restart();
