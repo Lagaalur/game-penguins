@@ -1,3 +1,48 @@
+
+let playerName = localStorage.getItem("playerName");
+
+if(!playerName)
+{
+playerName = prompt("Masukkan nama");
+localStorage.setItem("playerName",playerName);
+}
+
+
+async function saveScore(score)
+{
+
+const playerRef = db.collection("players").doc(playerName);
+
+const doc = await playerRef.get();
+
+if(!doc.exists)
+{
+await playerRef.set({
+name:playerName,
+bestScore:score
+});
+}
+else
+{
+let oldScore = doc.data().bestScore;
+
+if(score > oldScore)
+{
+await playerRef.set({
+name:playerName,
+bestScore:score
+});
+}
+}
+
+}
+
+
+
+
+
+
+
 const config = {
     type: Phaser.AUTO,
     //width: 1200,
@@ -162,7 +207,7 @@ function create() {
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
+    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -1405,7 +1450,7 @@ if (obs3.x <= 50 && !obs3.timerStarted)
    
 
     if (gameOver) {
-				
+		
 		player.anims.play('run', false);
 		player.anims.play('die', true);
 		obs3.anims.play('run', false);
@@ -1414,6 +1459,7 @@ if (obs3.x <= 50 && !obs3.timerStarted)
 		//shadow.y=player.y+300;
 		//adow2 = false;
 		//delay: 1500;
+		saveScore(score);
         if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
              speed=0;
 			 penguin1=0;
