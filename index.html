@@ -1,35 +1,57 @@
 <!DOCTYPE html>
+<html>
 
-<html><head><meta charset="UTF-8">
+<head>
 
-<title>Phaser Test</title>
-
-<script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-
-</head><body><script src="main.js"></script>
-
-
-</body></html>       <!DOCTYPE html>
-
-<html><head><meta charset="UTF-8">
-
-<title> Game Alur:D </title>
+<meta charset="UTF-8">
+<title>Game Alur</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-
-
 
 <style>
 canvas{
-    touch-action:none;
+touch-action:none;
 }
 </style>
 
+</head>
+
+<body>
+
+
+<script type="module">
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getFirestore } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyASLmy4PCjob4_WUgJbPzw9HfU8SnmK0eM",
+authDomain: "gamedasboard.firebaseapp.com",
+projectId: "gamedasboard",
+storageBucket: "gamedasboard.firebasestorage.app",
+messagingSenderId: "1079144606159",
+appId: "1:1079144606159:web:6f1b0f82c4c4cdda630aba"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+window.db = db;
+
+</script>
 
 
 
+<script src="main.js"></script>
 
 
-</head><body><script src="main.js"></script>
-
-</body></html>       
+</body>
+</html>
