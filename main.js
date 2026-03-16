@@ -1,65 +1,55 @@
-
-import { doc, getDoc, setDoc } from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-let playerName = localStorage.getItem("playerName");
-
-if(!playerName)
-{
-playerName = prompt("Masukkan nama kamu please");
-localStorage.setItem("playerName",playerName);
-}
+   
+   
+	import { doc, getDoc, setDoc } from 
+	"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
+	let playerName = localStorage.getItem("playerName");
+
+	if(!playerName)
+	{
+	playerName = prompt("Masukkan nama kamu please");
+	localStorage.setItem("playerName",playerName);
+	}
+
+	async function saveScore(score)
+	{
+
+	const playerRef = doc(db,"players",playerName);
+
+	const snapshot = await getDoc(playerRef);
+
+	if(!snapshot.exists())
+	{
+
+	await setDoc(playerRef,{
+	name:playerName,
+	bestScore:score
+	});
+
+	}
+	else
+	{
+
+	let oldScore = snapshot.data().bestScore;
+
+	if(score > oldScore)
+	{
+
+	await setDoc(playerRef,{
+	name:playerName,
+	bestScore:score
+	});
+
+	}
+
+	}
+
+	}
 
 
-
-
-
-
-
-async function saveScore(score)
-{
-
-const playerRef = doc(db,"players",playerName);
-
-const snapshot = await getDoc(playerRef);
-
-if(!snapshot.exists())
-{
-
-await setDoc(playerRef,{
-name:playerName,
-bestScore:score
-});
-
-}
-else
-{
-
-let oldScore = snapshot.data().bestScore;
-
-if(score > oldScore)
-{
-
-await setDoc(playerRef,{
-name:playerName,
-bestScore:score
-});
-
-}
-
-}
-
-}
-
-
-
-
-const config = {
+	const config = {
     type: Phaser.AUTO,
     //width: 1200,
     //height: 600,
@@ -69,84 +59,85 @@ const config = {
 	activePointers: 10 },
 	//pixelArt: true,
 
-scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 800,
-        height: 400
+	scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 400
     },
 
     backgroundColor: '#87CEEB',
 
 
 
-   physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 900},
-            debug: false
-		   //  debug: true
+    physics: {
+    default: 'arcade',
+    arcade: {
+    gravity: { y: 900},
+    debug: false
+	//  debug: true
 			
-        }
+    }
     },
 
     scene: {
-        preload,
-        create,
-        update
+    preload,
+    create,
+    update
     }
-};
+	};
 
-const game = new Phaser.Game(config);
+	const game = new Phaser.Game(config);
 
-let lastArrowFrame = -1;
-let player;
-let ground;
-let obstacles;
-let obstacles2;
-let obstacles3;
-let obstacles4;
-let obstacles5;
-let cursors;
-let keyA;
-let keyB;
-let score = 0;
-let scoreText;
-let gameOver = false;
-let gameStarted = false;
-let startText;
-let titleText;
-let shadow;
-let shadow2;
-let shadow3;
-let shadow4;
-let shadow5;
-let obs;
-let obs2;
-let obs3;
-let obs4;
-let obs5;
-let arrow;
-let leftPressed = false;
-let rightPressed = false;
-let upPressed = false;
-let downPressed = false;
-let buttonsa;
-let buttonsb;
-let buttonsc;
-let buttonsd;
-let btnsa;
-let btnsb;
-let btnsc;
-let btnsd;
-let speed=0;
-let penguin1=0;
-let penguin2=0;
-let animasiplayer;
-// ================= PRELOAD =================
+	let lastArrowFrame = -1;
+	let player;
+	let ground;
+	let obstacles;
+	let obstacles2;
+	let obstacles3;
+	let obstacles4;
+	let obstacles5;
+	let cursors;
+	let keyA;
+	let keyB;
+	let score = 0;
+	let scoreText;
+	let gameOver = false;
+	let gameStarted = false;
+	let startText;
+	let titleText;
+	let shadow;
+	let shadow2;
+	let shadow3;
+	let shadow4;
+	let shadow5;
+	let obs;
+	let obs2;
+	let obs3;
+	let obs4;
+	let obs5;
+	let arrow;
+	let leftPressed = false;
+	let rightPressed = false;
+	let upPressed = false;
+	let downPressed = false;
+	let buttonsa;
+	let buttonsb;
+	let buttonsc;
+	let buttonsd;
+	let btnsa;
+	let btnsb;
+	let btnsc;
+	let btnsd;
+	let speed=0;
+	let penguin1=0;
+	let penguin2=0;
+	let animasiplayer;
+
+	// ================= PRELOAD =================
 
 
-function preload() {
+	function preload() {
 
     // PASTIKAN FILE ADA
     // project folder:
@@ -187,20 +178,13 @@ function preload() {
     });
 	
 	
-	
-	
-
-}
+	}
 
 
+	// ================= CREATE =================
 
 
-
-
-// ================= CREATE =================
-
-
-function create() {
+	function create() {
 	
 	
 	//let bg = this.add.image(700, 300, 'view');.setOrigin(0, 0);
@@ -272,52 +256,52 @@ function create() {
 
     // ===== GROUND =====
 	
-   // ground = this.physics.add.staticGroup();
+   /*ground = this.physics.add.staticGroup();
 
-    ////let floor = this.add.rectangle(400, 490, 1800, 40, 0x654321);
-   // this.physics.add.existing(floor, true);
-   //// ground.add(floor);
-	//floor.setVisible(false);
+	let floor = this.add.rectangle(400, 490, 1800, 40, 0x654321);
+	this.physics.add.existing(floor, true);
+	ground.add(floor);
+	floor.setVisible(false);
+
+	*/
 
 
+	ground = this.physics.add.staticGroup();
 
-
-ground = this.physics.add.staticGroup();
-
-let floor = this.add.rectangle(
+	let floor = this.add.rectangle(
     this.scale.width / 2,          // Tengah horizontal
-    this.scale.height - 100,        // Agak bawah (20 px dari bawah)
+    this.scale.height - 100,       // Agak bawah (20 px dari bawah)
     this.scale.width,              // Full lebar layar
     10,                            // Tebal ground
     0x654321
-);
+	);
 
-this.physics.add.existing(floor, true);
-ground.add(floor);
+	this.physics.add.existing(floor, true);
+	ground.add(floor);
 
-floor.setVisible(false);
+	floor.setVisible(false);
 
 
-   // Button
+   // ===== BUTTON =====
 
-arrow = this.add.sprite(
-this.scale.width * 0.85,
-this.scale.height * 0.74,
-'arrow'
-);
-arrow.setScale(0.6);
-arrow.setFrame(1);
-arrow.setDepth(1000);
+	arrow = this.add.sprite(
+	this.scale.width * 0.85,
+	this.scale.height * 0.74,
+	'arrow'
+	);
+	arrow.setScale(0.6);
+	arrow.setFrame(1);
+	arrow.setDepth(1000);
 
 
 
 	let leftZone = this.add.zone(arrow.x - 80, arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
     let rightZone = this.add.zone(arrow.x + 31, arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
     let upZone = this.add.zone(arrow.x-30, arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
-   // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
+    // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
 
 
-     // event untuk update flag
+    // event untuk update flag
     leftZone.on('pointerdown', () => { leftPressed = true; });
     leftZone.on('pointerup', () => { leftPressed = false; });
 	leftZone.on('pointerout', () => { leftPressed = false; });
@@ -340,92 +324,92 @@ arrow.setDepth(1000);
 
     // optional: enable multi-touch
     //this.input.addPointer(2);
-*/
+	*/
 
-/*
-buttonsa = this.add.sprite(
+	/*
+	buttonsa = this.add.sprite(
     this.scale.width * 0.1,
     this.scale.height * 0.75,
     'button'
-);
-buttonsa.setScale(0.4);
-buttonsa.setFrame(3);
-buttonsa.setDepth(1000);
+	);
+	buttonsa.setScale(0.4);
+	buttonsa.setFrame(3);
+	buttonsa.setDepth(1000);
 
 
-buttonsb = this.add.sprite(
+	buttonsb = this.add.sprite(
     this.scale.width * 0.18,
     this.scale.height * 0.75,
     'button'
-);
-buttonsb.setScale(0.4);
-buttonsb.setFrame(2);
-buttonsb.setDepth(4000);
-*/
+	);
+	buttonsb.setScale(0.4);
+	buttonsb.setFrame(2);
+	buttonsb.setDepth(4000);
+	*/
 
-buttonsc = this.add.sprite(
+	buttonsc = this.add.sprite(
     this.scale.width * 0.16,
     this.scale.height * 0.85,
     'button'
-);
-buttonsc.setScale(0.7);
-buttonsc.setFrame(5);
-buttonsc.setDepth(1000);
+	);
+	buttonsc.setScale(0.7);
+	buttonsc.setFrame(5);
+	buttonsc.setDepth(1000);
 
 
-buttonsd = this.add.sprite(
+	buttonsd = this.add.sprite(
     this.scale.width * 0.1,
     this.scale.height * 0.70,
     'button'
-);
-buttonsd.setScale(0.7);
-buttonsd.setFrame(4);
-buttonsd.setDepth(1000);
+	);
+	buttonsd.setScale(0.7);
+	buttonsd.setFrame(4);
+	buttonsd.setDepth(1000);
 
 
-//buttonsa.setInteractive();
-//buttonsb.setInteractive();
-buttonsc.setInteractive();
-buttonsd.setInteractive();
-/*
-buttonsa.on('pointerdown', () => {btnsa = true;});
-buttonsa.on('pointerup', () => {btnsa = false;});
-buttonsa.on('pointerout', () => { btnsa = false; });
-buttonsa.on('pointercancel', () => { btnsa = false; });
+	//buttonsa.setInteractive();
+	//buttonsb.setInteractive();
+	buttonsc.setInteractive();
+	buttonsd.setInteractive();
+	/*
+	buttonsa.on('pointerdown', () => {btnsa = true;});
+	buttonsa.on('pointerup', () => {btnsa = false;});
+	buttonsa.on('pointerout', () => { btnsa = false; });
+	buttonsa.on('pointercancel', () => { btnsa = false; });
   
   
-buttonsb.on('pointerdown', () => {btnsb = true;});
-buttonsb.on('pointerup', () => {btnsb = false;});
-buttonsb.on('pointerout', () => { btnsb = false; });
-buttonsb.on('pointercancel', () => { btnsb = false; });
-//buttonsb.on('pointerover', () => { btnsb = true; });
-*/
+	buttonsb.on('pointerdown', () => {btnsb = true;});
+	buttonsb.on('pointerup', () => {btnsb = false;});
+	buttonsb.on('pointerout', () => { btnsb = false; });
+	buttonsb.on('pointercancel', () => { btnsb = false; });
+	//buttonsb.on('pointerover', () => { btnsb = true; });
+	*/
 
-buttonsc.on('pointerdown', () => {btnsc = true;});
-buttonsc.on('pointerup', () => {btnsc = false;});
-buttonsc.on('pointerout', () => { btnsc = false; });
-buttonsc.on('pointercancel', () => { btnsc = false; });
-
-
-buttonsd.on('pointerdown', () => {btnsd = true;});
-buttonsd.on('pointerup', () => {btnsd = false;});
-buttonsd.on('pointerout', () => { btnsd = false; });
-buttonsd.on('pointercancel', () => { btnsd = false; });
+	buttonsc.on('pointerdown', () => {btnsc = true;});
+	buttonsc.on('pointerup', () => {btnsc = false;});
+	buttonsc.on('pointerout', () => { btnsc = false; });
+	buttonsc.on('pointercancel', () => { btnsc = false; });
 
 
+	buttonsd.on('pointerdown', () => {btnsd = true;});
+	buttonsd.on('pointerup', () => {btnsd = false;});
+	buttonsd.on('pointerout', () => { btnsd = false; });
+	buttonsd.on('pointercancel', () => { btnsd = false; });
 
-this.input.addPointer(10);
+
+
+	this.input.addPointer(10);
 
 
     // ===== PLAYER =====
 	
-     //player = this.physics.add.sprite(100, 200, 'player');
-	 //player = this.physics.add.sprite(this.scale.height - 300, this.scale.width - 100, 'player');
+    //player = this.physics.add.sprite(100, 200, 'player');
+	//player = this.physics.add.sprite(this.scale.height - 300, this.scale.width - 100, 'player');
 	player = this.physics.add.sprite(
     this.scale.width * 0.5,   // 10% dari kiri
     this.scale.height * 0.5,  // 70% dari atas (dekat ground)
     'player'
-);
+	);
 
 
 	
@@ -440,7 +424,7 @@ this.input.addPointer(10);
 
     this.physics.add.collider(player, ground);
 	
-	 shadow = this.add.ellipse(player.x, ground.y +100 , 50,5, 0x000000, 0.3);
+	shadow = this.add.ellipse(player.x, ground.y +100 , 50,5, 0x000000, 0.3);
 
 	
 
@@ -462,7 +446,7 @@ this.input.addPointer(10);
 
 
 
-this.anims.create({
+	this.anims.create({
     key: 'obstacleMove',
     frames: this.anims.generateFrameNumbers('obstacle', {
         start: 4,
@@ -470,12 +454,12 @@ this.anims.create({
     }),
     frameRate: 5,
     repeat: -1
-});
+	});
 
 
 
 
-this.anims.create({
+	this.anims.create({
     key: 'rudalMove',
     frames: this.anims.generateFrameNumbers('obstacle2', {
         start: 5,
@@ -483,11 +467,11 @@ this.anims.create({
     }),
     frameRate: 5,
     repeat: -1
-});
+	});
 
 
 
-this.anims.create({
+	this.anims.create({
     key: 'rudal',
     frames: this.anims.generateFrameNumbers('obstacle2', {
         start: 8,
@@ -495,23 +479,23 @@ this.anims.create({
     }),
     frameRate: 5,
     repeat: 0
-});
+	});
 
 
 
 
-this.anims.create({
+	this.anims.create({
     key: 'obstacleMove2',
     frames: this.anims.generateFrameNumbers('obstacle', {
         frames : [14,15,16,17,18,0]
     }),
     frameRate: 5,
     repeat: 0
-});
+	});
 
 
-/*
-this.anims.create({
+	/*
+	this.anims.create({
     key: 'die',
     frames: this.anims.generateFrameNumbers('player', {
         start: 18,
@@ -520,33 +504,28 @@ this.anims.create({
 	
     frameRate: 10,
     repeat: -1
-});
+	});
 
-*/
+	*/
 
 
-this.anims.create({
+	this.anims.create({
     key: 'die',
     frames: [{ key: 'player', frame: 18 }],
     frameRate: 10,
     repeat: -1
-});
+	});
 
 
 
-
-
-
-
-
-this.anims.create({
-        key: 'arrow',
-        frames: this.anims.generateFrameNumbers('arrow', {
-            start: 0,
-            end: 4
-        }),
-        frameRate: 10,
-        repeat: -1
+	this.anims.create({
+    key: 'arrow',
+    frames: this.anims.generateFrameNumbers('arrow', {
+    start: 0,
+    end: 4
+    }),
+    frameRate: 10,
+    repeat: -1
     });
 
 
@@ -555,20 +534,19 @@ this.anims.create({
 	
 	//sample
 	
-   // obstacles = this.physics.add.sprite(500, 200, 'obstacle');//inii penting
-   // obstacles.setScale(2);
-    //obstacles.setCollideWorldBounds(true);
+    /*obstacles = this.physics.add.sprite(500, 200, 'obstacle');//inii penting
+      obstacles.setScale(2);
+      obstacles.setCollideWorldBounds(true);
+	  this.physics.add.collider(obstacles, ground);
+	
+	*/
+	
+	
+    // GROUP OBSTACLE
+	obstacles = this.physics.add.group();
 
-    //this.physics.add.collider(obstacles, ground);
-	
-	//
-	
-	
-   // GROUP OBSTACLE
-obstacles = this.physics.add.group();
-
-// COLLIDER PLAYER vs OBSTACLE
-this.physics.add.collider(player, obstacles, (playerObj, obstacleObj) => {
+	// COLLIDER PLAYER vs OBSTACLE
+	this.physics.add.collider(player, obstacles, (playerObj, obstacleObj) => {
 
     if (obstacleObj.hitTriggered) return;
 
@@ -580,19 +558,19 @@ this.physics.add.collider(player, obstacles, (playerObj, obstacleObj) => {
     obstacleObj.anims.play('obstacleMove2', true);
 	obstacleObj.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj.destroy();
+    obstacleObj.destroy();
 
     });
 
     gameOver = true;
     scoreText.setText("He died - Score: " + score + " (Press B)");
 
-});
+	});
 
-// COLLIDER OBSTACLE vs GROUND
-this.physics.add.collider(obstacles, ground, (obstacleObj) => {
+	// COLLIDER OBSTACLE vs GROUND
+	this.physics.add.collider(obstacles, ground, (obstacleObj) => {
 
     if (obstacleObj.hitTriggered) return;
 
@@ -614,18 +592,14 @@ this.physics.add.collider(obstacles, ground, (obstacleObj) => {
 
     });
 
-});
+	});
 
 
 
+	obstacles2 = this.physics.add.group();
 
-
-
-
-obstacles2 = this.physics.add.group();
-
-// COLLIDER PLAYER vs OBSTACLE
-this.physics.add.collider(player, obstacles2, (playerObj2, obstacleObj2) => {
+	// COLLIDER PLAYER vs OBSTACLE
+	this.physics.add.collider(player, obstacles2, (playerObj2, obstacleObj2) => {
 
     if (obstacleObj2.hitTriggered) return;
 
@@ -638,19 +612,19 @@ this.physics.add.collider(player, obstacles2, (playerObj2, obstacleObj2) => {
 	
 	obstacleObj2.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj2.destroy();
+    obstacleObj2.destroy();
 
     });
 
     gameOver = true;
     scoreText.setText("He died - Score: " + score + " (Press B!)");
 
-});
+	});
 
-// COLLIDER OBSTACLE vs GROUND
-this.physics.add.collider(obstacles2, ground, (obstacleObj2) => {
+	// COLLIDER OBSTACLE vs GROUND
+	this.physics.add.collider(obstacles2, ground, (obstacleObj2) => {
 
     if (obstacleObj2.hitTriggered) return;
 
@@ -663,22 +637,22 @@ this.physics.add.collider(obstacles2, ground, (obstacleObj2) => {
 	
 	obstacleObj2.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+     //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj2.destroy();
+    obstacleObj2.destroy();
 
     });
 
-});
+	});
 
 
 
 
- // GROUP OBSTACLE
-obstacles4 = this.physics.add.group();
+	// GROUP OBSTACLE
+	obstacles4 = this.physics.add.group();
 
-// COLLIDER PLAYER vs OBSTACLE
-this.physics.add.collider(player, obstacles4, (playerObj4, obstacleObj4) => {
+	// COLLIDER PLAYER vs OBSTACLE
+	this.physics.add.collider(player, obstacles4, (playerObj4, obstacleObj4) => {
 
     if (obstacleObj4.hitTriggered) return;
 
@@ -689,21 +663,21 @@ this.physics.add.collider(player, obstacles4, (playerObj4, obstacleObj4) => {
 
     obstacleObj4.anims.play('rudal', true);
 	
-	 obstacleObj4.scene.time.delayedCall(300, () => {
+	obstacleObj4.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj4.destroy();
+    obstacleObj4.destroy();
 
     });
 
     gameOver = true;
     scoreText.setText("He died - Score: " + score + " (Press B)");
 
-});
+	});
 
-// COLLIDER OBSTACLE vs GROUND
-this.physics.add.collider(obstacles4, ground, (obstacleObj4a) => {
+	// COLLIDER OBSTACLE vs GROUND
+	this.physics.add.collider(obstacles4, ground, (obstacleObj4a) => {
 
     if (obstacleObj4a.hitTriggered) return;
 
@@ -717,22 +691,22 @@ this.physics.add.collider(obstacles4, ground, (obstacleObj4a) => {
 	
 	obstacleObj4a.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj4a.destroy();
+    obstacleObj4a.destroy();
 
     });
 	
 	
 
-});
+	});
 
 
-// GROUP OBSTACLE
-obstacles5 = this.physics.add.group();
+	// GROUP OBSTACLE
+	obstacles5 = this.physics.add.group();
 
-// COLLIDER PLAYER vs OBSTACLE
-this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
+	// COLLIDER PLAYER vs OBSTACLE
+	this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
 
     if (obstacleObj5.hitTriggered) return;
 
@@ -743,21 +717,21 @@ this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
 
     obstacleObj5.anims.play('rudal', true);
 	
-	 obstacleObj5.scene.time.delayedCall(300, () => {
+	obstacleObj5.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj5.destroy();
+    obstacleObj5.destroy();
 
     });
 
     gameOver = true;
     scoreText.setText("He died - Score: " + score + " (Press B)");
 
-});
+	});
 
-// COLLIDER OBSTACLE vs GROUND
-this.physics.add.collider(obstacles5, ground, (obstacleObj5a) => {
+	// COLLIDER OBSTACLE vs GROUND
+	this.physics.add.collider(obstacles5, ground, (obstacleObj5a) => {
 
     if (obstacleObj5a.hitTriggered) return;
 
@@ -771,200 +745,171 @@ this.physics.add.collider(obstacles5, ground, (obstacleObj5a) => {
 	
 	obstacleObj5a.scene.time.delayedCall(300, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        obstacleObj5a.destroy();
+    obstacleObj5a.destroy();
 		
-		 });
+	});
 
-});
-
-
+	});
 
 
 
-
-
-
-
-obstacles3 = this.physics.add.group();
+	obstacles3 = this.physics.add.group();
   
 	//shadow2 = this.add.ellipse(obstacles, ground.y +30 , 50,5, 0x000000, 0.3); 
 	
     this.physics.add.collider(obstacles2, obstacles3, (Obj2, obstacleObj3) => {
 		
 		
-		if (obstacleObj3.hitTriggered) return;
+	if (obstacleObj3.hitTriggered) return;
 
-        obstacleObj3.hitTriggered = true;
+    obstacleObj3.hitTriggered = true;
 
-        obstacleObj3.setVelocity(0, 0);
-        obstacleObj3.body.enable = false;
+    obstacleObj3.setVelocity(0, 0);
+    obstacleObj3.body.enable = false;
 
-        obstacleObj3.anims.play('die', true);
-		//obstacleObj3.setFrame(18);
-        obstacleObj3.setCrop(2, 0, 78, 80); 
+    obstacleObj3.anims.play('die', true);
+	//obstacleObj3.setFrame(18);
+    obstacleObj3.setCrop(2, 0, 78, 80); 
 
-		obstacleObj3.scene.time.delayedCall(6000, () => {
+	obstacleObj3.scene.time.delayedCall(6000, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-       // obstacleObj3.destroy();
-	    obstacleObj3.destroy();
-		penguin2=0;
-	
-
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    // obstacleObj3.destroy();
+	obstacleObj3.destroy();
+	penguin2=0;
+	//if (obstacleObj.shadow) obstacleObj.shadow.destroy();
       
-      
-		
-		
-		
-		});
+    });
 		
 
-		//obstacleObj.setSize(50,50);
-	    //obstacleObj.setOffset(70,90);
-	    //obstacleObj3.setScale(1);
-		//shadow2 = this.add.ellipse(); 
-        //gameOver = true;
+	/*obstacleObj.setSize(50,50);
+	obstacleObj.setOffset(70,90);
+	obstacleObj3.setScale(1);
+	shadow2 = this.add.ellipse(); 
+    gameOver = true;
 		
-		//player.setVelocityX(-700);
-		//obstacleObj.setVelocityX(0);
-		//obstacleObj.anims.play('obstacleMove2', false);
-		//scoreText.setText("He died - Score: " + score + " (Press R)");
-		//this.physics.pause();
-		
+	player.setVelocityX(-700);
+	obstacleObj.setVelocityX(0);
+	obstacleObj.anims.play('obstacleMove2', false);
+	scoreText.setText("He died - Score: " + score + " (Press R)");
+	this.physics.pause();
+	*/	
 		
     });
 
 
 
 
-     this.physics.add.collider(obstacles, obstacles3, (Obj, obstacleObj3b) => {
+	this.physics.add.collider(obstacles, obstacles3, (Obj, obstacleObj3b) => {
 		
 		
-		if (obstacleObj3b.hitTriggered) return;
+	if (obstacleObj3b.hitTriggered) return;
+	obstacleObj3b.hitTriggered = true;
 
-        obstacleObj3b.hitTriggered = true;
+    obstacleObj3b.setVelocity(0, 0);
+    obstacleObj3b.body.enable = false;
 
-        obstacleObj3b.setVelocity(0, 0);
-        obstacleObj3b.body.enable = false;
+    obstacleObj3b.anims.play('die', true);
+	//obstacleObj3b.setFrame(18);
+    obstacleObj3b.setCrop(2, 0, 78, 80);  
 
-        obstacleObj3b.anims.play('die', true);
-		//obstacleObj3b.setFrame(18);
-         obstacleObj3b.setCrop(2, 0, 78, 80);  
+	obstacleObj3b.scene.time.delayedCall(6000, () => {
 
-		obstacleObj3b.scene.time.delayedCall(6000, () => {
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
-
-        //obstacleObj3b.destroy();
+    //obstacleObj3b.destroy();
 		
 		
-		
-
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
-
-        obstacleObj3b.destroy();
-		penguin2=0;
-		
-		
-		});
-		
-		});
 		
 
-		//obstacleObj.setSize(50,50);
-	    //obstacleObj.setOffset(70,90);
-	    //obstacleObj3.setScale(1);
-		//shadow2 = this.add.ellipse(); 
-        //gameOver = true;
-		
-		//player.setVelocityX(-700);
-		//obstacleObj.setVelocityX(0);
-		//obstacleObj.anims.play('obstacleMove2', false);
-		//scoreText.setText("He died - Score: " + score + " (Press B)");
-		//this.physics.pause();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+
+    obstacleObj3b.destroy();
+	penguin2=0;
 		
 		
+	});
+		
+	});
+		
+
+	/*obstacleObj.setSize(50,50);
+	obstacleObj.setOffset(70,90);
+	obstacleObj3.setScale(1);
+	shadow2 = this.add.ellipse(); 
+    gameOver = true;
+		
+	player.setVelocityX(-700);
+	obstacleObj.setVelocityX(0);
+	obstacleObj.anims.play('obstacleMove2', false);
+	scoreText.setText("He died - Score: " + score + " (Press B)");
+	this.physics.pause();
+		
+	*/	
    
 
 
-
-
-
-this.physics.add.collider(obstacles4, obstacles3, (Objj, obstacleObj3c) => {
+	this.physics.add.collider(obstacles4, obstacles3, (Objj, obstacleObj3c) => {
 		
 		
-		if (obstacleObj3c.hitTriggered) return;
+	if (obstacleObj3c.hitTriggered) return;
 
-        obstacleObj3c.hitTriggered = true;
+    obstacleObj3c.hitTriggered = true;
 
-        obstacleObj3c.setVelocity(0, 0);
-        obstacleObj3c.body.enable = false;
+    obstacleObj3c.setVelocity(0, 0);
+    obstacleObj3c.body.enable = false;
 
-        obstacleObj3c.anims.play('die', true);
-		 //obstacleObj3c.setFrame(18);
-         obstacleObj3c.setCrop(2, 0, 78, 80); 
+    obstacleObj3c.anims.play('die', true);
+	//obstacleObj3c.setFrame(18);
+    obstacleObj3c.setCrop(2, 0, 78, 80); 
 		
-		obstacleObj3c.scene.time.delayedCall(6000, () => {
+	obstacleObj3c.scene.time.delayedCall(6000, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
-		obstacleObj3c.destroy();
-       // obstacleObj3c.destroy();
-		penguin2=0;
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+	obstacleObj3c.destroy();
+    // obstacleObj3c.destroy();
+	penguin2=0;
 		
-	
-
-        
-		
-		//spawnObstacle3.call(this);
+	//spawnObstacle3.call(this);
        
-		
-		
-		
-		
-		
-		
-		
-		});
+			
+	});
 
-		});			
+	});			
 		
    
 
 
 
-this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
+	this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
 		
 		
-		if (obstacleObj3d.hitTriggered) return;
+	if (obstacleObj3d.hitTriggered) return;
 
-        obstacleObj3d.hitTriggered = true;
+    obstacleObj3d.hitTriggered = true;
 
-        obstacleObj3d.setVelocity(0, 0);
-        obstacleObj3d.body.enable = false;
+    obstacleObj3d.setVelocity(0, 0);
+    obstacleObj3d.body.enable = false;
 
-        obstacleObj3d.anims.play('die', true);
-		//obstacleObj3d.setFrame(18);
-         obstacleObj3d.setCrop(2, 0, 78, 80);  
+    obstacleObj3d.anims.play('die', true);
+	//obstacleObj3d.setFrame(18);
+    obstacleObj3d.setCrop(2, 0, 78, 80);  
 
-		obstacleObj3d.scene.time.delayedCall(6000, () => {
+	obstacleObj3d.scene.time.delayedCall(6000, () => {
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
-        obstacleObj3d.destroy();
-       // obstacleObj3d.destroy();
-		penguin2=0;
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    obstacleObj3d.destroy();
+    // obstacleObj3d.destroy();
+	penguin2=0;
 		
 		
 
-        //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
+    //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
-      
-		 
-
-
+ 
     });
 		
 	});			
@@ -977,39 +922,36 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
     // ===== SCORE =====
 	
 	
-	
-	
-		scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + score + " penguin", {
-        fontSize: "20px",
-        //fontSize: "22px",
-        //fill: "#00ffcc"
-		//fill: "#66CCFF",
-        //fontStyle: "bold"
+	scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + score + " penguin", {
+    fontSize: "20px",
+    //fontSize: "22px",
+    //fill: "#00ffcc"
+	//fill: "#66CCFF",
+    //fontStyle: "bold"
 		
-		fontFamily: "Arial",
-        fill: "#AEEFFF",
-        fontStyle: "bold",
-        stroke: "#003344",
-        strokeThickness: 6,
+	fontFamily: "Arial",
+    fill: "#AEEFFF",
+    fontStyle: "bold",
+    stroke: "#003344",
+    strokeThickness: 6,
 
     shadow: {
-        offsetX: 2,
-        offsetY: 2,
-        color: "#000000",
-        blur: 4,
-        fill: true }
+    offsetX: 2,
+    offsetY: 2,
+    color: "#000000",
+    blur: 4,
+    fill: true }
     });
 
     this.time.addEvent({
-        delay: 1000,
-        callback: () => {
-            if (!gameOver && gameStarted) {
+    delay: 1000,
+    callback: () => {
+    if (!gameOver && gameStarted) {
                 
-                scoreText.setText("last he save " + score + " penguin");
-				
-            }
-        },
-        loop: true
+    scoreText.setText("last he save " + score + " penguin");}
+				        
+    },
+    loop: true
     });
 
     // ===== KEYBOARD =====
@@ -1018,16 +960,14 @@ this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
     cursors = this.input.keyboard.createCursorKeys();
     keyB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-	 
-	
 	this.input.keyboard.removeAllListeners();
     this.input.keyboard.disableGlobalCapture();
-}
+	}
 
-// ================= SPAWN OBSTACLE =================
+	// ================= SPAWN OBSTACLE =================
 
 
-function spawnObstacle() {
+	function spawnObstacle() {
 
     if (gameOver) return;
 
@@ -1045,7 +985,7 @@ function spawnObstacle() {
 
     // TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(80, 160);
+    let speed = secureBetween(25, 55);
 
     obs.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1063,25 +1003,25 @@ function spawnObstacle() {
     // SHADOW
     let shadowobs = this.add.ellipse(obs.x, ground.y + 30, 34, 5, 0x000000, 0.3);
     obs.shadowobs = shadowobs;
-}
+	}
 
 
 
 
-function spawnObstacle2() {
+	function spawnObstacle2() {
 
     if (gameOver) return;
 
- /*   let obs2 = obstacles2.create(
+	/*   let obs2 = obstacles2.create(
     this.scale.width + Phaser.Math.Between(80, 200),
     Phaser.Math.Between(-150, -50),
     'obstacle'
-); */
+	); */
 
-let obs2 = obstacles2.create(
-        secureBetween(0, this.scale.width),   // random selebar layar
-        secureBetween(-120, -40),             // muncul dari atas layar
-        'obstacle'
+	let obs2 = obstacles2.create(
+    secureBetween(0, this.scale.width),   // random selebar layar
+    secureBetween(-120, -40),             // muncul dari atas layar
+    'obstacle'
     );
 
     // FLAG HIT
@@ -1091,16 +1031,16 @@ let obs2 = obstacles2.create(
     obs2.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(60, 70));
-   // let speed = Phaser.Math.Between(100, 1000);
+    // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(60, 70));
+    // let speed = Phaser.Math.Between(100, 1000);
 	
 	// TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(80, 160);
+    let speed = secureBetween(25, 55);
 
     obs2.setVelocity(
-        Math.sin(angle) * speed,   // gerakan kiri kanan
-        speed                      // jatuh ke bawah
+    Math.sin(angle) * speed,   // gerakan kiri kanan
+    speed                      // jatuh ke bawah
     );
 
     // VISUAL
@@ -1114,10 +1054,10 @@ let obs2 = obstacles2.create(
     // SHADOW
     let shadowobs = this.add.ellipse(obs2.x, ground.y + 30, 34, 5, 0x000000, 0.3);
     obs2.shadowobs = shadowobs;
-}
+	}
 
 
-function spawnObstacle3() {
+	function spawnObstacle3() {
 
     
 
@@ -1128,22 +1068,6 @@ function spawnObstacle3() {
 	}
 	
 	 obs3 = this.physics.add.sprite(this.scale.width * 0.95, this.scale.height * 0.6, 'player');
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
     obs3.setFrame(11);
@@ -1163,34 +1087,34 @@ function spawnObstacle3() {
     obs3.body.setAllowGravity(true);
 	
 
-   // obs3.anims.play('run', true);
+    // obs3.anims.play('run', true);
     //obs3.setFrame(11);
     obstacles3.add(obs3);
 	penguin2= penguin2+1;
 	//obstacles3.setVelocityX(-100); 
 	
 	
-}
+	}
 
 
 
 
 
 
-function spawnObstacle4() {
+	function spawnObstacle4() {
 
     if (gameOver) return;
 
-  /*  let obs4 = obstacles4.create(
+	/*  let obs4 = obstacles4.create(
     this.scale.width + Phaser.Math.Between(-100, -500),
     Phaser.Math.Between(0, 0),
     'obstacle2'
-);*/
+	);*/
 
-let obs4 = obstacles4.create(
-        secureBetween(0, this.scale.width),   // random selebar layar
-        secureBetween(-120, -40),             // muncul dari atas layar
-        'obstacle2'
+	let obs4 = obstacles4.create(
+    secureBetween(0, this.scale.width),   // random selebar layar
+    secureBetween(-120, -40),             // muncul dari atas layar
+    'obstacle2'
     );
 
     // FLAG HIT
@@ -1200,12 +1124,12 @@ let obs4 = obstacles4.create(
     obs4.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
+    // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
     //let speed = Phaser.Math.Between(-50, -1);
 	// ANGLE PARABOLA
     // TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(80, 160);
+    let speed = secureBetween(25, 55);
 
     obs4.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1223,29 +1147,22 @@ let obs4 = obstacles4.create(
     // SHADOW
     let shadowobs4 = this.add.ellipse(obs4.x, ground.y + 30, 34, 5, 0x000000, 0.3);
     obs4.shadowobs4 = shadowobs4;
-}
+	}
 
 
-
-
-
-
-
-
-
-function spawnObstacle5() {
+	function spawnObstacle5() {
 
     if (gameOver) return;
 
-  /*  let obs5 = obstacles5.create(
+	/*  let obs5 = obstacles5.create(
     this.scale.width + Phaser.Math.Between(50, -100),
     Phaser.Math.Between(-100, 0),
     'obstacle2'
-); */
+	); */
 
-let obs5 = obstacles5.create(
-        secureBetween(0, this.scale.width),   // random selebar layar
-        secureBetween(-120, -40),             // muncul dari atas layar
+	let obs5 = obstacles5.create(
+    secureBetween(0, this.scale.width),   // random selebar layar
+    secureBetween(-120, -40),             // muncul dari atas layar
         'obstacle2'
     );
 
@@ -1257,12 +1174,12 @@ let obs5 = obstacles5.create(
     obs5.body.setAllowGravity(true);
 
     // TRAJECTORY PARABOLA RANDOM
-   // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
-   // let speed = Phaser.Math.Between(-50, -1);
+    // let angle = Phaser.Math.DegToRad(Phaser.Math.Between(-0.10, -70));
+    // let speed = Phaser.Math.Between(-50, -1);
 	
 	// TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(80, 160);
+    let speed = secureBetween(25, 55);
 
     obs5.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1283,155 +1200,136 @@ let obs5 = obstacles5.create(
 }
 
 
-// ================= RNG =================
+	// ================= RNG ================= Randomnes mendekati TRNG
 
 
-function secureBetween(min, max) {
+	function secureBetween(min, max) {
     const range = max - min + 1;
     const array = new Uint32Array(1);
     crypto.getRandomValues(array);
     return min + (array[0] % range);
-}
+	}
 
 
+	// ================= UPDATE =================
 
 
-
-
-
-
-
-// ================= UPDATE =================
-
-
-function update() {
- 
- 
-		
-        shadow.x=player.x;
-		shadow.y=this.scale.height - 107;
-		//obs.shadow2.x=obs.x;
-		//obs.shadow2.y=obs.y +20 ;
-		
-		
-		
-		
-		
-	//	obstacles.children.iterate(function(ob){
-     //   if(ob && ob.shadow2){
-      //      ob.shadow2.x = ob.x;
-     //       ob.shadow2.y = ob.y + 20;
-     //   }
-   // });
+	function update() {
+ 	
+    shadow.x=player.x;
+	shadow.y=this.scale.height - 107;
+	//obs.shadow2.x=obs.x;
+	//obs.shadow2.y=obs.y +20 ;
+				
+	 /*	obstacles.children.iterate(function(ob){
+     if(ob && ob.shadow2){
+     ob.shadow2.x = ob.x;
+     ob.shadow2.y = ob.y + 20;
+     }
+     });*/
 		
 		
  
     if (!gameStarted) {
-        if (Phaser.Input.Keyboard.JustDown(keyA)||btnsd) {
+    if (Phaser.Input.Keyboard.JustDown(keyA)||btnsd) {
 
-            gameStarted = true;
-            titleText.setVisible(false);
-            startText.setVisible(false);
+    gameStarted = true;
+    titleText.setVisible(false);
+    startText.setVisible(false);
 			
  
 
-            this.time.addEvent({
-                delay:  secureBetween(1500, 4000),
-                callback: spawnObstacle,
-                callbackScope: this,
-                loop: true
-            });
+    this.time.addEvent({
+    delay:  secureBetween(1500, 4000),
+    callback: spawnObstacle,
+    callbackScope: this,
+    loop: true
+    });
 			
 			
 			
-			this.time.addEvent({
-                delay:  secureBetween(500, 4000),
-                callback: spawnObstacle2,
-                callbackScope: this,
-                loop: true
-            });
+	this.time.addEvent({
+    delay:  secureBetween(500, 4000),
+    callback: spawnObstacle2,
+    callbackScope: this,
+    loop: true
+    });
 			
 			
-			this.time.addEvent({
-                delay:  secureBetween(1500, 4000),
-                callback: spawnObstacle4,
-                callbackScope: this,
-                loop: true
-            });
+	this.time.addEvent({
+    delay:  secureBetween(1500, 4000),
+    callback: spawnObstacle4,
+	callbackScope: this,
+    loop: true
+    });
 			
-	/*		if(penguin2<1) {
-			this.time.addEvent({
-                delay: 1500,
-                callback: spawnObstacle3,
-                callbackScope: this,
-                loop: true
-            });penguin2+=1;
-			} */
+	/*	if(penguin2<1) {
+	this.time.addEvent({
+    delay: 1500,
+    callback: spawnObstacle3,
+    callbackScope: this,
+    loop: true
+    });penguin2+=1;
+	} */
 			
-			this.time.addEvent({
-                delay:  secureBetween(1500, 4000),
-                callback: spawnObstacle5,
-                callbackScope: this,
-                loop: true
-            });
-			
-			
-			
-			
-			
-			
-			
-        }
+	this.time.addEvent({
+    delay:  secureBetween(1500, 4000),
+    callback: spawnObstacle5,
+    callbackScope: this,
+    loop: true
+    });
+					
+    }
         return;
     }
 	
 	
-	 if (penguin2==0) {
-        spawnObstacle3.call(this);
-        this.spawn3Done = true; // pastikan hanya sekali
-		obs3.timerStarted = false;
+	if (penguin2==0) {
+    spawnObstacle3.call(this);
+    this.spawn3Done = true; // pastikan hanya sekali
+	obs3.timerStarted = false;
     }
 	
 	
-//const groundY = 500; // ganti sesuai posisi ground
+	//const groundY = 500; // ganti sesuai posisi ground
 
-//let groundY = 500; // ground level, sesuaikan
+	//let groundY = 500; // ground level, sesuaikan
 
-const groundY = 500; // ground level, sesuaikan
+	const groundY = 500; // ground level, sesuaikan
 
-if (obs3) {
+	if (obs3) {
 
     // trigger follow saat disentuh player
     if (!obs3.following && Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), obs3.getBounds())) {
        
-     if(penguin1==0){
-	 obs3.following = true;}
+    if(penguin1==0){
+	obs3.following = true;}
     }
 
     if (obs3.following) {
 
-        // horizontal velocity ikut player
-        obs3.body.velocity.x = player.body.velocity.x;
+    // horizontal velocity ikut player
+    obs3.body.velocity.x = player.body.velocity.x;
 
-        // vertical velocity ikut player saat lompat
-        if (player.y < groundY) {
-            obs3.body.velocity.y = player.body.velocity.y;
-        }
-
-        // koreksi X supaya menempel persis
-        obs3.x = player.x;
-
-        // koreksi Y saat player di ground, obs3 gravity handle landing
-        if (player.y >= groundY) {
-            obs3.y = groundY - obs3.height/2;
-        }
+    // vertical velocity ikut player saat lompat
+    if (player.y < groundY) {
+    obs3.body.velocity.y = player.body.velocity.y;
     }
-}
+
+    // koreksi X supaya menempel persis
+    obs3.x = player.x;
+
+    // koreksi Y saat player di ground, obs3 gravity handle landing
+    if (player.y >= groundY) {
+    obs3.y = groundY - obs3.height/2;
+    }
+    }
+	}
    
 
 
-if (obs3.x <= 50 && !obs3.timerStarted)
-{     
+	if (obs3.x <= 50 && !obs3.timerStarted)
+	{     
     // Set kecepatan dan state
     obs3.body.velocity.x = -100;
     penguin2 = 0;
@@ -1447,129 +1345,113 @@ if (obs3.x <= 50 && !obs3.timerStarted)
 	    
         penguin1 = 0;
     }, [], this);
-}
+	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
 
     if (gameOver) {
 		
-		player.anims.play('run', false);
-		player.anims.play('die', true);
-		obs3.anims.play('run', false);
-		obs3.anims.play('die', true);
-		player.setCrop(2, 0, 78, 80); 
-		//shadow.y=player.y+300;
-		//adow2 = false;
-		//delay: 1500;
-		saveScore(score);
-        if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
-             speed=0;
-			 penguin1=0;
-			 penguin2=0;
+	player.anims.play('run', false);
+	player.anims.play('die', true);
+	obs3.anims.play('run', false);
+	obs3.anims.play('die', true);
+	player.setCrop(2, 0, 78, 80); 
+	//shadow.y=player.y+300;
+	//shadow2 = false;
+	//delay: 1500;
+	saveScore(score);
+    if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
+    speed=0;
+	penguin1=0;
+	penguin2=0;
 			
 			
-			this.scene.restart();
+	this.scene.restart();
 			
-	    }
-        return;
+	}
+    return;
     }
 
     player.setVelocityX(0);
 
-let arrowFrame = 1; // default idle
+	let arrowFrame = 1; // default idle
 
-// ===== GERAK =====
+	// ===== GERAK =====
 
-//if(btnsb==HiGH
-
-
-
-//speed = buttonsb.input.pointerDown() ? 700 : 200;
+	//if(btnsb==HiGH
 
 
 
+	//speed = buttonsb.input.pointerDown() ? 700 : 200;
 
 
-/*
-if (buttonsb.input && this.input.activePointer.isDown &&
+	/*
+	if (buttonsb.input && this.input.activePointer.isDown &&
     buttonsb.getBounds().contains(
-        this.input.activePointer.x,
-        this.input.activePointer.y
+    this.input.activePointer.x,
+    this.input.activePointer.y
     )) {
     speed = 700;
-} */
-if(btnsc==true)
-{speed = 700;
-buttonsc.setFrame(9);
+	} */
+	if(btnsc==true||keyB.isDown)//SPEED EXTRA
+	{speed = 700;
+	buttonsc.setFrame(9);
 
-}
-else{buttonsc.setFrame(5);
-speed = 200;
+	}
+	else{buttonsc.setFrame(5);
+	speed = 200;
 
-}
+	}
 
 
-//speed = btnsb ? 700 : 200; // cek tombol B sekali saja
+	//speed = btnsb ? 700 : 200; // cek tombol B sekali saja
 
-let arah=0;
+	let arah=0;
 
-if (cursors.left.isDown || leftPressed) {
+	if (cursors.left.isDown || leftPressed) {
     arah=-1;
     player.anims.play('run', true);
     player.flipX = false;
     arrowFrame = 0;
-}
-if (cursors.right.isDown || rightPressed) {
+	}
+	if (cursors.right.isDown || rightPressed) {
     arah=1;
     player.anims.play('run', true);
     player.flipX = true;
     arrowFrame = 2;
-}
-if (
-  !(cursors.left.isDown || leftPressed) && 
-  !(cursors.right.isDown || rightPressed)
-   ) 
-   {
+	}
+	if (
+	!(cursors.left.isDown || leftPressed) && 
+	!(cursors.right.isDown || rightPressed)
+	) 
+	{
     arah=0; // diam kalau tidak ada input
     player.anims.play('run', false);
     player.setFrame(11);
-}
+	}
 
 
 
- player.setVelocityX(arah*speed); 
+	player.setVelocityX(arah*speed); 
 
 
-// ===== JUMP =====
+	// ===== JUMP =====
 
 
 
-if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsd)) {
+	if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsd)||
+		(keyA.isDown&&player.body.blocked.down )) {
     player.setVelocityY(-500);  
 	//arrow.setFrame(3);
     //  arrowFrame = 3;	
-}
-if(!(btnsd) && !(cursors.space.isDown) ) {    buttonsd.setFrame(4);    }                
-else{buttonsd.setFrame(8);}
+	}
+	if(!(btnsd) && !(cursors.space.isDown)  &&!(keyA.isDown)) { buttonsd.setFrame(4);    }                
+	else{buttonsd.setFrame(8);}
 
-if(upPressed ) {arrowFrame=3;}
+	if(upPressed ) {arrowFrame=3;}
 
-// ===== APPLY FRAME + SAFE TWEEN =====
-if (arrowFrame !== lastArrowFrame){
+	// ===== APPLY FRAME + SAFE TWEEN =====
+	if (arrowFrame !== lastArrowFrame){
 
     arrow.setFrame(arrowFrame);
 	//if(arrowFrame!==0&&arrowFrame!==2&&arrowFrame!==2)
@@ -1578,37 +1460,26 @@ if (arrowFrame !== lastArrowFrame){
     this.tweens.killTweensOf(arrow);
 
     this.tweens.add({
-        targets: arrow ,
-        scale: 0.6,
-        duration: 60,
-        yoyo: true,
-        ease: 'Quad.easeOut'
+    targets: arrow ,
+    scale: 0.6,
+    duration: 60,
+    yoyo: true,
+    ease: 'Quad.easeOut'
     });
 
     lastArrowFrame = arrowFrame;
 	
-}
+	}
 
 
-
-/*if (!this.input.activePointer.isDown) {
-  btnsc = false;
-  btnsa=false;
-  btnsb=false;
-  btnsd=false;
-  leftPressed=false;
-  rightPressed=false;
-  upPressed=false;
+	/*if (!this.input.activePointer.isDown) {
+	btnsc = false;
+	btnsa=false;
+	btnsb=false;
+	btnsd=false;
+	leftPressed=false;
+	rightPressed=false;
+	upPressed=false;
   
-}*/
-
-
-
-
-
-
-
-
-
-
-}
+	}*/
+	}
