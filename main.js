@@ -985,7 +985,7 @@
 
     // TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(25, 55);
+    let speed = secureBetween(5, 15);
 
     obs.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1036,7 +1036,7 @@
 	
 	// TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(25, 55);
+    let speed = secureBetween(5, 15);
 
     obs2.setVelocity(
     Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1129,7 +1129,7 @@
 	// ANGLE PARABOLA
     // TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(25, 55);
+    let speed = secureBetween(5, 15);
 
     obs4.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
@@ -1179,7 +1179,7 @@
 	
 	// TRAJECTORY
     let angle = Phaser.Math.DegToRad(secureBetween(-30, 30)); // sedikit miring kiri kanan
-    let speed = secureBetween(25, 55);
+    let speed = secureBetween(5, 15);
 
     obs5.setVelocity(
         Math.sin(angle) * speed,   // gerakan kiri kanan
