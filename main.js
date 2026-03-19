@@ -47,97 +47,81 @@
 	}
 
 	}
+	
+    
+
+//let score;
+//let playerName;
 
 
-	const config = {
-    type: Phaser.AUTO,
-    //width: 1200,
-    //height: 600,
-    //backgroundColor: '#87CEEB',
-
-    input: {
-	activePointers: 10 },
-	//pixelArt: true,
-
-	scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 800,
-    height: 400
-    },
-
-    backgroundColor: '#87CEEB',
+//================================================================================PARENT SCANE==========================================================================================
 
 
 
-    physics: {
-    default: 'arcade',
-    arcade: {
-    gravity: { y: 900},
-    debug: false
-	//  debug: true
-			
-    }
-    },
 
-    scene: {
-    preload,
-    create,
-    update
-    }
-	};
-
-	const game = new Phaser.Game(config);
-
-	let lastArrowFrame = -1;
-	let player;
-	let ground;
-	let obstacles;
-	let obstacles2;
-	let obstacles3;
-	let obstacles4;
-	let obstacles5;
-	let cursors;
-	let keyA;
-	let keyB;
-	let score = 0;
-	let scoreText;
-	let gameOver = false;
-	let gameStarted = false;
-	let startText;
-	let titleText;
-	let shadow;
-	let shadow2;
-	let shadow3;
-	let shadow4;
-	let shadow5;
-	let obs;
-	let obs2;
-	let obs3;
-	let obs4;
-	let obs5;
-	let arrow;
-	let leftPressed = false;
-	let rightPressed = false;
-	let upPressed = false;
-	let downPressed = false;
-	let buttonsa;
-	let buttonsb;
-	let buttonsc;
-	let buttonsd;
-	let btnsa;
-	let btnsb;
-	let btnsc;
-	let btnsd;
-	let speed=0;
-	let penguin1=0;
-	let penguin2=0;
-	let animasiplayer;
-
-	// ================= PRELOAD =================
+class BaseScene extends Phaser.Scene {
 
 
-	function preload() {
+	init() {
+    this.lastArrowFrame = -1;
+	this.player;
+	this.ground;
+	this.obstacles;
+	this.obstacles2;
+	this.obstacles3;
+	this.obstacles4;
+	this.obstacles5;
+	this.cursors;
+	this.keyA;
+	this.keyB;
+	this.score = 0;
+	this.scoreText;
+	this.gameOver = false;
+	this.gameStarted = false;
+	this.startText;
+	this.titleText;
+	this.shadow;
+	this.shadow2;
+	this.shadow3;
+	this.shadow4;
+	this.shadow5;
+	this.obs;
+	this.obs2;
+	this.obs3;
+	this.obs4;
+	this.obs5;
+	this.arrow;
+	this.leftPressed = false;
+	this.rightPressed = false;
+	this.upPressed = false;
+	this.downPressed = false;
+	this.buttonsa;
+	this.buttonsb;
+	this.buttonsc;
+	this.buttonsd;
+	this.btnsa;
+	this.btnsb;
+	this.btnsc;
+	this.btnsd;
+	this.speed=0;
+	this.penguin1=0;
+	this.penguin2=0;
+	this.animasiplayer; }
+	score=this.schor
+	//PRELOAD
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//preloadGame
+	
+	
+	preloadGame() {
 
     // PASTIKAN FILE ADA
     // project folder:
@@ -179,12 +163,15 @@
 	
 	
 	}
+	
+	
+	
+
+	
+	//=============CRATEGAME==============
 
 
-	// ================= CREATE =================
-
-
-	function create() {
+	createGame() {
 	
 	
 	//let bg = this.add.image(700, 300, 'view');.setOrigin(0, 0);
@@ -196,9 +183,9 @@
     );
        
 
-    score = 0;
-    gameOver = false;
-    gameStarted = false;
+    this.score = 0;
+    this.gameOver = false;
+    this.gameStarted = false;
 	
 	
 	
@@ -207,7 +194,7 @@
    
 	
 
-    titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
+    this.titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -231,7 +218,7 @@
 		
     }).setOrigin(0.5);
 
-    startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start!!", {
+    this.startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start!!", {
         fontSize: "15px",
         //fill: "#00ffcc"
 		//fill: "#66CCFF",
@@ -266,7 +253,7 @@
 	*/
 
 
-	ground = this.physics.add.staticGroup();
+	this.ground = this.physics.add.staticGroup();
 
 	let floor = this.add.rectangle(
     this.scale.width / 2,          // Tengah horizontal
@@ -277,45 +264,45 @@
 	);
 
 	this.physics.add.existing(floor, true);
-	ground.add(floor);
+	this.ground.add(floor);
 
 	floor.setVisible(false);
 
 
    // ===== BUTTON =====
 
-	arrow = this.add.sprite(
+	this.arrow = this.add.sprite(
 	this.scale.width * 0.85,
 	this.scale.height * 0.74,
 	'arrow'
 	);
-	arrow.setScale(0.6);
-	arrow.setFrame(1);
-	arrow.setDepth(1000);
+	this.arrow.setScale(0.6);
+	this.arrow.setFrame(1);
+	this.arrow.setDepth(1000);
 
 
 
-	let leftZone = this.add.zone(arrow.x - 80, arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
-    let rightZone = this.add.zone(arrow.x + 31, arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
-    let upZone = this.add.zone(arrow.x-30, arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
+	let leftZone = this.add.zone(this.arrow.x - 80, this.arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
+    let rightZone = this.add.zone(this.arrow.x + 31, this.arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
+    let upZone = this.add.zone(this.arrow.x-30, this.arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
     // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
 
 
     // event untuk update flag
-    leftZone.on('pointerdown', () => { leftPressed = true; });
-    leftZone.on('pointerup', () => { leftPressed = false; });
-	leftZone.on('pointerout', () => { leftPressed = false; });
-	leftZone.on('pointercancel', () => { leftPressed = false; });
+    leftZone.on('pointerdown', () => { this.leftPressed = true; });
+    leftZone.on('pointerup', () => { this.leftPressed = false; });
+	leftZone.on('pointerout', () => { this.leftPressed = false; });
+	leftZone.on('pointercancel', () => { this.leftPressed = false; });
 
-    rightZone.on('pointerdown', () => { rightPressed = true; });
-    rightZone.on('pointerup', () => { rightPressed = false; });
-	rightZone.on('pointerout', () => { rightPressed = false; });
-	rightZone.on('pointercancel', () => { rightPressed = false; });
+    rightZone.on('pointerdown', () => { this.rightPressed = true; });
+    rightZone.on('pointerup', () => { this.rightPressed = false; });
+	rightZone.on('pointerout', () => { this.rightPressed = false; });
+	rightZone.on('pointercancel', () => { this.rightPressed = false; });
 
-    upZone.on('pointerdown', () => { upPressed = true; });
-    upZone.on('pointerup', () => { upPressed = false; });
-	upZone.on('pointerout', () => { upPressed = false; });
-	upZone.on('pointercancel', () => { upPressed = false; });
+    upZone.on('pointerdown', () => { this.upPressed = true; });
+    upZone.on('pointerup', () => { this.upPressed = false; });
+	upZone.on('pointerout', () => { this.upPressed = false; });
+	upZone.on('pointercancel', () => { this.upPressed = false; });
 
   /*downZone.on('pointerdown', () => { downPressed = true; });
     downZone.on('pointerup', () => { downPressed = false; });
@@ -347,30 +334,30 @@
 	buttonsb.setDepth(4000);
 	*/
 
-	buttonsc = this.add.sprite(
+	this.buttonsc = this.add.sprite(
     this.scale.width * 0.16,
     this.scale.height * 0.85,
     'button'
 	);
-	buttonsc.setScale(0.7);
-	buttonsc.setFrame(5);
-	buttonsc.setDepth(1000);
+	this.buttonsc.setScale(0.7);
+	this.buttonsc.setFrame(5);
+	this.buttonsc.setDepth(1000);
 
 
-	buttonsd = this.add.sprite(
+	this.buttonsd = this.add.sprite(
     this.scale.width * 0.1,
     this.scale.height * 0.70,
     'button'
 	);
-	buttonsd.setScale(0.7);
-	buttonsd.setFrame(4);
-	buttonsd.setDepth(1000);
+	this.buttonsd.setScale(0.7);
+	this.buttonsd.setFrame(4);
+	this.buttonsd.setDepth(1000);
 
 
 	//buttonsa.setInteractive();
 	//buttonsb.setInteractive();
-	buttonsc.setInteractive();
-	buttonsd.setInteractive();
+	this.buttonsc.setInteractive();
+	this.buttonsd.setInteractive();
 	/*
 	buttonsa.on('pointerdown', () => {btnsa = true;});
 	buttonsa.on('pointerup', () => {btnsa = false;});
@@ -385,16 +372,16 @@
 	//buttonsb.on('pointerover', () => { btnsb = true; });
 	*/
 
-	buttonsc.on('pointerdown', () => {btnsc = true;});
-	buttonsc.on('pointerup', () => {btnsc = false;});
-	buttonsc.on('pointerout', () => { btnsc = false; });
-	buttonsc.on('pointercancel', () => { btnsc = false; });
+	this.buttonsc.on('pointerdown', () => {this.btnsc = true;});
+	this.buttonsc.on('pointerup', () => {this.btnsc = false;});
+	this.buttonsc.on('pointerout', () => { this.btnsc = false; });
+	this.buttonsc.on('pointercancel', () => { this.btnsc = false; });
 
 
-	buttonsd.on('pointerdown', () => {btnsd = true;});
-	buttonsd.on('pointerup', () => {btnsd = false;});
-	buttonsd.on('pointerout', () => { btnsd = false; });
-	buttonsd.on('pointercancel', () => { btnsd = false; });
+	this.buttonsd.on('pointerdown', () => {this.btnsd = true;});
+	this.buttonsd.on('pointerup', () => {this.btnsd = false;});
+	this.buttonsd.on('pointerout', () => { this.btnsd = false; });
+	this.buttonsd.on('pointercancel', () => { this.btnsd = false; });
 
 
 
@@ -405,7 +392,7 @@
 	
     //player = this.physics.add.sprite(100, 200, 'player');
 	//player = this.physics.add.sprite(this.scale.height - 300, this.scale.width - 100, 'player');
-	player = this.physics.add.sprite(
+	this.player = this.physics.add.sprite(
     this.scale.width * 0.5,   // 10% dari kiri
     this.scale.height * 0.5,  // 70% dari atas (dekat ground)
     'player'
@@ -415,16 +402,16 @@
 	
 	
 	
-    player.setScale(1);
+    this.player.setScale(1);
 	
-	player.setSize(40,60);
-	player.setOffset(20,20);
+	this.player.setSize(40,60);
+	this.player.setOffset(20,20);
 	
-    player.setCollideWorldBounds(true);
+    this.player.setCollideWorldBounds(true);
 
-    this.physics.add.collider(player, ground);
+    this.physics.add.collider(this.player, this.ground);
 	
-	shadow = this.add.ellipse(player.x, ground.y +100 , 50,5, 0x000000, 0.3);
+	this.shadow = this.add.ellipse(this.player.x, this.ground.y +100 , 50,5, 0x000000, 0.3);
 
 	
 
@@ -543,10 +530,10 @@
 	
 	
     // GROUP OBSTACLE
-	obstacles = this.physics.add.group();
+	this.obstacles = this.physics.add.group();
 
 	// COLLIDER PLAYER vs OBSTACLE
-	this.physics.add.collider(player, obstacles, (playerObj, obstacleObj) => {
+	this.physics.add.collider(this.player, this.obstacles, (playerObj, obstacleObj) => {
 
     if (obstacleObj.hitTriggered) return;
 
@@ -564,13 +551,13 @@
 
     });
 
-    gameOver = true;
-    scoreText.setText("He died - Score: " + score + " (Press B)");
+    this.gameOver = true;
+    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
 
 	});
 
 	// COLLIDER OBSTACLE vs GROUND
-	this.physics.add.collider(obstacles, ground, (obstacleObj) => {
+	this.physics.add.collider(this.obstacles, this.ground, (obstacleObj) => {
 
     if (obstacleObj.hitTriggered) return;
 
@@ -596,10 +583,10 @@
 
 
 
-	obstacles2 = this.physics.add.group();
+	this.obstacles2 = this.physics.add.group();
 
 	// COLLIDER PLAYER vs OBSTACLE
-	this.physics.add.collider(player, obstacles2, (playerObj2, obstacleObj2) => {
+	this.physics.add.collider(this.player, this.obstacles2, (playerObj2, obstacleObj2) => {
 
     if (obstacleObj2.hitTriggered) return;
 
@@ -618,13 +605,13 @@
 
     });
 
-    gameOver = true;
-    scoreText.setText("He died - Score: " + score + " (Press B!)");
+    this.gameOver = true;
+    this.scoreText.setText("He died - Score: " + this.score + " (Press B!)");
 
 	});
 
 	// COLLIDER OBSTACLE vs GROUND
-	this.physics.add.collider(obstacles2, ground, (obstacleObj2) => {
+	this.physics.add.collider(this.obstacles2, this.ground, (obstacleObj2) => {
 
     if (obstacleObj2.hitTriggered) return;
 
@@ -649,10 +636,10 @@
 
 
 	// GROUP OBSTACLE
-	obstacles4 = this.physics.add.group();
+	this.obstacles4 = this.physics.add.group();
 
 	// COLLIDER PLAYER vs OBSTACLE
-	this.physics.add.collider(player, obstacles4, (playerObj4, obstacleObj4) => {
+	this.physics.add.collider(this.player, this.obstacles4, (playerObj4, obstacleObj4) => {
 
     if (obstacleObj4.hitTriggered) return;
 
@@ -671,13 +658,13 @@
 
     });
 
-    gameOver = true;
-    scoreText.setText("He died - Score: " + score + " (Press B)");
+    this.gameOver = true;
+    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
 
 	});
 
 	// COLLIDER OBSTACLE vs GROUND
-	this.physics.add.collider(obstacles4, ground, (obstacleObj4a) => {
+	this.physics.add.collider(this.obstacles4, this.ground, (obstacleObj4a) => {
 
     if (obstacleObj4a.hitTriggered) return;
 
@@ -703,10 +690,10 @@
 
 
 	// GROUP OBSTACLE
-	obstacles5 = this.physics.add.group();
+	this.obstacles5 = this.physics.add.group();
 
 	// COLLIDER PLAYER vs OBSTACLE
-	this.physics.add.collider(player, obstacles5, (playerObj5, obstacleObj5) => {
+	this.physics.add.collider(this.player, this.obstacles5, (playerObj5, obstacleObj5) => {
 
     if (obstacleObj5.hitTriggered) return;
 
@@ -725,13 +712,13 @@
 
     });
 
-    gameOver = true;
-    scoreText.setText("He died - Score: " + score + " (Press B)");
+    this.gameOver = true;
+    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
 
 	});
 
 	// COLLIDER OBSTACLE vs GROUND
-	this.physics.add.collider(obstacles5, ground, (obstacleObj5a) => {
+	this.physics.add.collider(this.obstacles5, this.ground, (obstacleObj5a) => {
 
     if (obstacleObj5a.hitTriggered) return;
 
@@ -753,13 +740,13 @@
 
 	});
 
+	//penguin kecil
 
-
-	obstacles3 = this.physics.add.group();
+	this.obstacles3 = this.physics.add.group();
   
 	//shadow2 = this.add.ellipse(obstacles, ground.y +30 , 50,5, 0x000000, 0.3); 
 	
-    this.physics.add.collider(obstacles2, obstacles3, (Obj2, obstacleObj3) => {
+    this.physics.add.collider(this.obstacles2, this.obstacles3, (Obj2, obstacleObj3) => {
 		
 		
 	if (obstacleObj3.hitTriggered) return;
@@ -779,7 +766,7 @@
 
     // obstacleObj3.destroy();
 	obstacleObj3.destroy();
-	penguin2=0;
+	this.penguin2=0;
 	//if (obstacleObj.shadow) obstacleObj.shadow.destroy();
       
     });
@@ -803,7 +790,7 @@
 
 
 
-	this.physics.add.collider(obstacles, obstacles3, (Obj, obstacleObj3b) => {
+	this.physics.add.collider(this.obstacles, this.obstacles3, (Obj, obstacleObj3b) => {
 		
 		
 	if (obstacleObj3b.hitTriggered) return;
@@ -828,7 +815,7 @@
     //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 
     obstacleObj3b.destroy();
-	penguin2=0;
+	this.penguin2=0;
 		
 		
 	});
@@ -852,7 +839,7 @@
    
 
 
-	this.physics.add.collider(obstacles4, obstacles3, (Objj, obstacleObj3c) => {
+	this.physics.add.collider(this.obstacles4, this.obstacles3, (Objj, obstacleObj3c) => {
 		
 		
 	if (obstacleObj3c.hitTriggered) return;
@@ -871,7 +858,7 @@
     //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
 	obstacleObj3c.destroy();
     // obstacleObj3c.destroy();
-	penguin2=0;
+	this.penguin2=0;
 		
 	//spawnObstacle3.call(this);
        
@@ -884,7 +871,7 @@
 
 
 
-	this.physics.add.collider(obstacles5, obstacles3, (Objja, obstacleObj3d) => {
+	this.physics.add.collider(this.obstacles5, this.obstacles3, (Objja, obstacleObj3d) => {
 		
 		
 	if (obstacleObj3d.hitTriggered) return;
@@ -903,7 +890,7 @@
     //if (obstacleObj.shadow) obstacleObj.shadow.destroy();
     obstacleObj3d.destroy();
     // obstacleObj3d.destroy();
-	penguin2=0;
+	this.penguin2=0;
 		
 		
 
@@ -922,7 +909,7 @@
     // ===== SCORE =====
 	
 	
-	scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + score + " penguin", {
+	this.scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + this.score + " penguin", {
     fontSize: "20px",
     //fontSize: "22px",
     //fill: "#00ffcc"
@@ -946,9 +933,9 @@
     this.time.addEvent({
     delay: 1000,
     callback: () => {
-    if (!gameOver && gameStarted) {
+    if (!this.gameOver && this.gameStarted) {
                 
-    scoreText.setText("last he save " + score + " penguin");}
+    this.scoreText.setText("last he save " + this.score + " penguin");}
 				        
     },
     loop: true
@@ -957,21 +944,28 @@
     // ===== KEYBOARD =====
 	
 	
-    cursors = this.input.keyboard.createCursorKeys();
-    keyB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
-    keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.keyB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 	this.input.keyboard.removeAllListeners();
     this.input.keyboard.disableGlobalCapture();
 	}
 
-	// ================= SPAWN OBSTACLE =================
 
+    
 
-	function spawnObstacle() {
+    
+	//========================================================SPAWN OBTACLES========================================================================
+	
+	
+	
+	
+	
+	spawnObstacle() {
 
-    if (gameOver) return;
+    if (this.gameOver) return;
 
-    let obs = obstacles.create(
+    let obs = this.obstacles.create(
         secureBetween(0, this.scale.width),   // random selebar layar
         secureBetween(-120, -40),             // muncul dari atas layar
         'obstacle'
@@ -1001,16 +995,16 @@
     obs.anims.play('obstacleMove', true);
 
     // SHADOW
-    let shadowobs = this.add.ellipse(obs.x, ground.y + 30, 34, 5, 0x000000, 0.3);
+    let shadowobs = this.add.ellipse(obs.x, this.ground.y + 30, 34, 5, 0x000000, 0.3);
     obs.shadowobs = shadowobs;
 	}
 
 
 
 
-	function spawnObstacle2() {
+	spawnObstacle2() {
 
-    if (gameOver) return;
+    if (this.gameOver) return;
 
 	/*   let obs2 = obstacles2.create(
     this.scale.width + Phaser.Math.Between(80, 200),
@@ -1018,7 +1012,7 @@
     'obstacle'
 	); */
 
-	let obs2 = obstacles2.create(
+	let obs2 = this.obstacles2.create(
     secureBetween(0, this.scale.width),   // random selebar layar
     secureBetween(-120, -40),             // muncul dari atas layar
     'obstacle'
@@ -1052,45 +1046,45 @@
     obs2.anims.play('obstacleMove', true);
 
     // SHADOW
-    let shadowobs = this.add.ellipse(obs2.x, ground.y + 30, 34, 5, 0x000000, 0.3);
+    let shadowobs = this.add.ellipse(obs2.x, this.ground.y + 30, 34, 5, 0x000000, 0.3);
     obs2.shadowobs = shadowobs;
 	}
 
 
-	function spawnObstacle3() {
+	spawnObstacle3() {
 
     
 
-    if(gameOver) 
+    if(this.gameOver) 
 	{ 
      
      return;
 	}
 	
-	 obs3 = this.physics.add.sprite(this.scale.width * 0.95, this.scale.height * 0.6, 'player');
+	this.obs3 = this.physics.add.sprite(this.scale.width * 0.95, this.scale.height * 0.6, 'player');
 	
 	
-    obs3.setFrame(11);
+    this.obs3.setFrame(11);
     //shadow2 = this.add.ellipse(obs.x, obs.y +30 , 34,5, 0x000000, 0.3);
 	
 	//obs3.shadow2=shadow2;
     //obs.setOrigin(4, 3);
 
     //obs.setScale(0.5);
-	obs3.setSize(50,87);
-	obs3.setOffset(0,0);
-	obs3.setScale(0.5);
+	this.obs3.setSize(50,87);
+	this.obs3.setOffset(0,0);
+	this.obs3.setScale(0.5);
 
-	this.physics.add.collider(obs3, ground);
+	this.physics.add.collider(this.obs3, this.ground);
 
     
-    obs3.body.setAllowGravity(true);
+    this.obs3.body.setAllowGravity(true);
 	
 
     // obs3.anims.play('run', true);
     //obs3.setFrame(11);
-    obstacles3.add(obs3);
-	penguin2= penguin2+1;
+    this.obstacles3.add(this.obs3);
+	this.penguin2= this.penguin2+1;
 	//obstacles3.setVelocityX(-100); 
 	
 	
@@ -1101,9 +1095,9 @@
 
 
 
-	function spawnObstacle4() {
+	spawnObstacle4() {
 
-    if (gameOver) return;
+    if (this.gameOver) return;
 
 	/*  let obs4 = obstacles4.create(
     this.scale.width + Phaser.Math.Between(-100, -500),
@@ -1111,7 +1105,7 @@
     'obstacle2'
 	);*/
 
-	let obs4 = obstacles4.create(
+	let obs4 = this.obstacles4.create(
     secureBetween(0, this.scale.width),   // random selebar layar
     secureBetween(-120, -40),             // muncul dari atas layar
     'obstacle2'
@@ -1145,14 +1139,14 @@
     obs4.anims.play('rudalMove', true);
 
     // SHADOW
-    let shadowobs4 = this.add.ellipse(obs4.x, ground.y + 30, 34, 5, 0x000000, 0.3);
+    let shadowobs4 = this.add.ellipse(obs4.x, this.ground.y + 30, 34, 5, 0x000000, 0.3);
     obs4.shadowobs4 = shadowobs4;
 	}
 
 
-	function spawnObstacle5() {
+	spawnObstacle5() {
 
-    if (gameOver) return;
+    if (this.gameOver) return;
 
 	/*  let obs5 = obstacles5.create(
     this.scale.width + Phaser.Math.Between(50, -100),
@@ -1160,7 +1154,7 @@
     'obstacle2'
 	); */
 
-	let obs5 = obstacles5.create(
+	let obs5 = this.obstacles5.create(
     secureBetween(0, this.scale.width),   // random selebar layar
     secureBetween(-120, -40),             // muncul dari atas layar
         'obstacle2'
@@ -1195,29 +1189,178 @@
     obs5.anims.play('rudalMove', true);
 
     // SHADOW
-    let shadowobs5 = this.add.ellipse(obs5.x, ground.y + 30, 34, 5, 0x000000, 0.3);
+    let shadowobs5 = this.add.ellipse(obs5.x, this.ground.y + 30, 34, 5, 0x000000, 0.3);
     obs5.shadowobs5 = shadowobs5;
 }
 
+}
+	
+	//===============================================================MAIN MENU SCANE=======================================================================
+	
+     class MainMenuScene extends BaseScene {
+    constructor() {
+        super('MainMenuScene');
+    }
 
-	// ================= RNG ================= Randomnes mendekati TRNG
+    preload() {this.preloadGame();}
 
 
-	function secureBetween(min, max) {
-    const range = max - min + 1;
-    const array = new Uint32Array(1);
-    crypto.getRandomValues(array);
-    return min + (array[0] % range);
+    create() {
+        this.createGame();
+		//  tombol START di tengah
+        const startBtn = this.add.text(400, 200, 'START GAME', {
+            fontSize: '32px',
+            fill: '#ffffff',
+            backgroundColor: '#1e90ff'
+        })
+        .setOrigin(0.5)
+        .setInteractive();
+
+        startBtn.on('pointerdown', () => {
+            this.scene.start('GameScene');
+		});
+	
+		// tombol CREDIT
+		const creditBtn = this.add.text(400, 260, 'CREDITS', {
+		fontSize: '28px',
+		fill: '#ffffff',
+		
+		//fill: '#000',
+        backgroundColor: '#1e90ff'
+		//backgroundColor: '#000'
+		})
+		.setOrigin(0.5)
+		.setInteractive();
+
+		creditBtn.on('pointerdown', () => {
+		this.scene.start('CreditScene');
+		});
+		}
+	
+	update()
+	{}
 	}
+   
+   //================================================================CREDIT=================================================================================
 
 
-	// ================= UPDATE =================
 
 
-	function update() {
+   class CreditScene extends BaseScene {
+
+    constructor() {
+        super('CreditScene');
+    }
+
+
+    preload() {this.preloadGame();}
+
+
+    create() {
+             
+        //  background gelap transparan (biar kayak dialog)
+        // const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
+		this.createGame();
+        //  teks credit
+		const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
+        const text = this.add.text(400, 150,
+		`
+		 
+		 Programmer & Design Game
+		 Laga alur
+		
+		 Design Art  
+		 free sources from the internet
+		
+		 Background
+		 AI generated images`,
+		
+        {
+            fontSize: '20px',
+            fill: '#ffffff',
+            align: 'center'		
+        })
+        .setOrigin(0.5);
+
+        //  tombol BACK
+        const backBtn = this.add.text(400, 280, 'BACK', {
+            fontSize: '24px',
+            fill: '#ffffff',
+            backgroundColor: '#000'
+        })
+        .setOrigin(0.5)
+        .setInteractive();
+
+        backBtn.on('pointerdown', () => {
+            this.scene.start('MainMenuScene');
+        });
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   //=================================================================SCANE GAME===========================================================================
+
+
+	class GameScene extends BaseScene {
+
+    constructor() {
+    super('GameScene');
+    }
+	// ================= PRELOAD =================
+
+
+	preload() {this.preloadGame();}
+
+
+	// ================= CREATE =================
+
+
+	create() {this.createGame();
+	
+	const backBtn = this.add.text(this.sys.game.config.width - 10, 10, 'BACK TO MENU', {
+        fontSize: '28px',
+        fill: '#000',
+        backgroundColor: '#aeefff'
+    })
+    .setOrigin(1, 0) // anchor di kanan atas
+    .setInteractive();
+
+    backBtn.on('pointerdown', () => {
+        this.scene.start('MainMenuScene');
+    });
+
+
+    }  
+	
+	
+	
+	
+	
+	
+	
+	//===============UPDATE============
+	
+	update() {
  	
-    shadow.x=player.x;
-	shadow.y=this.scale.height - 107;
+    this.shadow.x=this.player.x;
+	this.shadow.y=this.scale.height - 107;
 	//obs.shadow2.x=obs.x;
 	//obs.shadow2.y=obs.y +20 ;
 				
@@ -1230,18 +1373,18 @@
 		
 		
  
-    if (!gameStarted) {
-    if (Phaser.Input.Keyboard.JustDown(keyA)||btnsd) {
+    if (!this.gameStarted) {
+    if (Phaser.Input.Keyboard.JustDown(this.keyA)||this.btnsd) {
 
-    gameStarted = true;
-    titleText.setVisible(false);
-    startText.setVisible(false);
+    this.gameStarted = true;
+    this.titleText.setVisible(false);
+    this.startText.setVisible(false);
 			
  
 
     this.time.addEvent({
     delay:  secureBetween(1500, 4000),
-    callback: spawnObstacle,
+    callback: this.spawnObstacle,
     callbackScope: this,
     loop: true
     });
@@ -1250,7 +1393,7 @@
 			
 	this.time.addEvent({
     delay:  secureBetween(500, 4000),
-    callback: spawnObstacle2,
+    callback: this.spawnObstacle2,
     callbackScope: this,
     loop: true
     });
@@ -1258,7 +1401,7 @@
 			
 	this.time.addEvent({
     delay:  secureBetween(1500, 4000),
-    callback: spawnObstacle4,
+    callback: this.spawnObstacle4,
 	callbackScope: this,
     loop: true
     });
@@ -1274,7 +1417,7 @@
 			
 	this.time.addEvent({
     delay:  secureBetween(1500, 4000),
-    callback: spawnObstacle5,
+    callback: this.spawnObstacle5,
     callbackScope: this,
     loop: true
     });
@@ -1284,10 +1427,10 @@
     }
 	
 	
-	if (penguin2==0) {
-    spawnObstacle3.call(this);
+	if (this.penguin2==0) {
+    this.spawnObstacle3.call(this);
     this.spawn3Done = true; // pastikan hanya sekali
-	obs3.timerStarted = false;
+	this.obs3.timerStarted = false;
     }
 	
 	
@@ -1297,73 +1440,73 @@
 
 	const groundY = 500; // ground level, sesuaikan
 
-	if (obs3) {
+	if (this.obs3) {
 
     // trigger follow saat disentuh player
-    if (!obs3.following && Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), obs3.getBounds())) {
+    if (!this.obs3.following && Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), this.obs3.getBounds())) {
        
-    if(penguin1==0){
-	obs3.following = true;}
+    if(this.penguin1==0){
+	this.obs3.following = true;}
     }
 
-    if (obs3.following) {
+    if (this.obs3.following) {
 
     // horizontal velocity ikut player
-    obs3.body.velocity.x = player.body.velocity.x;
+    this.obs3.body.velocity.x = this.player.body.velocity.x;
 
     // vertical velocity ikut player saat lompat
-    if (player.y < groundY) {
-    obs3.body.velocity.y = player.body.velocity.y;
+    if (this.player.y < groundY) {
+    this.obs3.body.velocity.y = this.player.body.velocity.y;
     }
 
     // koreksi X supaya menempel persis
-    obs3.x = player.x;
+    this.obs3.x = this.player.x;
 
     // koreksi Y saat player di ground, obs3 gravity handle landing
-    if (player.y >= groundY) {
-    obs3.y = groundY - obs3.height/2;
+    if (this.player.y >= groundY) {
+    this.obs3.y = groundY - this.obs3.height/2;
     }
     }
 	}
    
 
 
-	if (obs3.x <= 50 && !obs3.timerStarted)
+	if (this.obs3.x <= 50 && !this.obs3.timerStarted)
 	{     
     // Set kecepatan dan state
-    obs3.body.velocity.x = -100;
-    penguin2 = 0;
-    obs3.following = false;
-    penguin1 = 1;
-    score++;
+    this.obs3.body.velocity.x = -100;
+    this.penguin2 = 0;
+    this.obs3.following = false;
+    this.penguin1 = 1;
+    this.score++;
     // Tandai bahwa timer sudah dimulai supaya tidak terulang tiap frame
-    obs3.timerStarted = true;
+    this.obs3.timerStarted = true;
 
     // Timer delay 6000ms (6 detik)
     this.time.delayedCall(200, () => {
        // obs3.destroy();
 	    
-        penguin1 = 0;
+        this.penguin1 = 0;
     }, [], this);
 	}
 
 
 
-    if (gameOver) {
+    if (this.gameOver) {
 		
-	player.anims.play('run', false);
-	player.anims.play('die', true);
-	obs3.anims.play('run', false);
-	obs3.anims.play('die', true);
-	player.setCrop(2, 0, 78, 80); 
+	this.player.anims.play('run', false);
+	this.player.anims.play('die', true);
+	this.obs3.anims.play('run', false);
+	this.obs3.anims.play('die', true);
+	this.player.setCrop(2, 0, 78, 80); 
 	//shadow.y=player.y+300;
 	//shadow2 = false;
 	//delay: 1500;
-	saveScore(score);
-    if (Phaser.Input.Keyboard.JustDown(keyB)||btnsc) {
-    speed=0;
-	penguin1=0;
-	penguin2=0;
+	saveScore(this.score);
+    if (Phaser.Input.Keyboard.JustDown(this.keyB)||this.btnsc) {
+    this.speed=0;
+	this.penguin1=0;
+	this.penguin2=0;
 			
 			
 	this.scene.restart();
@@ -1372,7 +1515,7 @@
     return;
     }
 
-    player.setVelocityX(0);
+    this.player.setVelocityX(0);
 
 	let arrowFrame = 1; // default idle
 
@@ -1393,13 +1536,13 @@
     )) {
     speed = 700;
 	} */
-	if(btnsc==true||keyB.isDown)//SPEED EXTRA
-	{speed = 700;
-	buttonsc.setFrame(9);
+	if(this.btnsc==true||this.keyB.isDown)//SPEED EXTRA
+	{this.speed = 700;
+	this.buttonsc.setFrame(9);
 
 	}
-	else{buttonsc.setFrame(5);
-	speed = 200;
+	else{this.buttonsc.setFrame(5);
+	this.speed = 200;
 
 	}
 
@@ -1408,68 +1551,68 @@
 
 	let arah=0;
 
-	if (cursors.left.isDown || leftPressed) {
+	if (this.cursors.left.isDown || this.leftPressed) {
     arah=-1;
-    player.anims.play('run', true);
-    player.flipX = false;
+    this.player.anims.play('run', true);
+    this.player.flipX = false;
     arrowFrame = 0;
 	}
-	if (cursors.right.isDown || rightPressed) {
+	if (this.cursors.right.isDown || this.rightPressed) {
     arah=1;
-    player.anims.play('run', true);
-    player.flipX = true;
+    this.player.anims.play('run', true);
+    this.player.flipX = true;
     arrowFrame = 2;
 	}
 	if (
-	!(cursors.left.isDown || leftPressed) && 
-	!(cursors.right.isDown || rightPressed)
+	!(this.cursors.left.isDown || this.leftPressed) && 
+	!(this.cursors.right.isDown || this.rightPressed)
 	) 
 	{
     arah=0; // diam kalau tidak ada input
-    player.anims.play('run', false);
-    player.setFrame(11);
+    this.player.anims.play('run', false);
+    this.player.setFrame(11);
 	}
 
 
 
-	player.setVelocityX(arah*speed); 
+	this.player.setVelocityX(arah*this.speed); 
 
 
 	// ===== JUMP =====
 
 
 
-	if ((player.body.blocked.down && cursors.space.isDown) || (player.body.blocked.down && upPressed)||(player.body.blocked.down&&btnsd)||
-		(keyA.isDown&&player.body.blocked.down )) {
-    player.setVelocityY(-500);  
+	if ((this.player.body.blocked.down && this.cursors.space.isDown) || (this.player.body.blocked.down && this.upPressed)||(this.player.body.blocked.down&&this.btnsd)||
+		(this.keyA.isDown&&this.player.body.blocked.down )) {
+    this.player.setVelocityY(-500);  
 	//arrow.setFrame(3);
     //  arrowFrame = 3;	
 	}
-	if(!(btnsd) && !(cursors.space.isDown)  &&!(keyA.isDown)) { buttonsd.setFrame(4);    }                
-	else{buttonsd.setFrame(8);}
+	if(!(this.btnsd) && !(this.cursors.space.isDown)  &&!(this.keyA.isDown)) { this.buttonsd.setFrame(4);    }                
+	else{this.buttonsd.setFrame(8);}
 
-	if(upPressed ) {arrowFrame=3;}
+	if(this.upPressed ) {arrowFrame=3;}
 
 	// ===== APPLY FRAME + SAFE TWEEN =====
-	if (arrowFrame !== lastArrowFrame){
+	if (arrowFrame !== this.lastArrowFrame){
 
-    arrow.setFrame(arrowFrame);
+    this.arrow.setFrame(arrowFrame);
 	//if(arrowFrame!==0&&arrowFrame!==2&&arrowFrame!==2)
 
     // Stop tween lama biar gak numpuk
-    this.tweens.killTweensOf(arrow);
+    this.tweens.killTweensOf(this.arrow);
 
     this.tweens.add({
-    targets: arrow ,
+    targets: this.arrow ,
     scale: 0.6,
     duration: 60,
     yoyo: true,
     ease: 'Quad.easeOut'
     });
 
-    lastArrowFrame = arrowFrame;
+    this.lastArrowFrame = arrowFrame;
 	
-	}
+	}}}
 
 
 	/*if (!this.input.activePointer.isDown) {
@@ -1482,4 +1625,97 @@
 	upPressed=false;
   
 	}*/
+	
+
+
+	
+	
+	
+
+
+	
+	
+	
+//====================================================================================================================================================================================	
+	
+	
+//====================================================================================================================================================================================	
+
+
+//==============================================================================CONFIG================================================================================================
+
+	const config = {
+    type: Phaser.AUTO,
+    //width: 1200,
+    //height: 600,
+    //backgroundColor: '#87CEEB',
+
+    input: {
+	activePointers: 10 },
+	//pixelArt: true,
+
+	scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 400
+    },
+
+    backgroundColor: '#87CEEB',
+
+    physics: {
+    default: 'arcade',
+    arcade: {
+    gravity: { y: 900},
+    debug: false
+	//  debug: true
+			
+    }
+    },
+
+    scene: [
+    MainMenuScene,
+	GameScene, 
+	CreditScene
+    
+	//GameScene 
+    //MainMenuScene
+    ]
+	};
+
+	const game = new Phaser.Game(config);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===========================================================================================================================================================================	
+
+//===========================================================================FUNCTION=========================================================================================
+
+
+
+// ================= RNG ================= Randomnes mendekati TRNG
+
+
+	function secureBetween(min, max) {
+    const range = max - min + 1;
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return min + (array[0] % range);
 	}
+	
+
