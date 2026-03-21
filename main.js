@@ -3,7 +3,7 @@
 	import { doc, getDoc, setDoc } from 
 	"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
+    import { saveScore, loadTopScores } from "./firebase.js";
 
 	let playerName = localStorage.getItem("playerName");
 
@@ -13,7 +13,7 @@
 	localStorage.setItem("playerName",playerName);
 	}
 
-	async function saveScore(score)
+	async function saveScorex(score)
 	{
 
 	const playerRef = doc(db,"players",playerName);
@@ -194,7 +194,7 @@ class BaseScene extends Phaser.Scene {
    
 	
 
-    this.titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin X.Y", {
+    this.titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguins X.Y", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -1565,53 +1565,97 @@ Rescue as many baby penguins as possible to achieve the highest score.
 
 
 
+// 🔥 IMPORT HARUS DI ATAS
+//import { loadTopScores } from "./firebase.js";
+
 class ScoreScene extends BaseScene {
 
     constructor() {
         super('ScoreScene');
     }
 
+    preload() {
+        this.preloadGame();
+    }
 
-    preload() {this.preloadGame();}
+    async create() {
 
+        this.createGame();
 
-    create() {
-             
-        //  background gelap transparan (biar kayak dialog)
-        // const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
-		this.createGame();
-        //  teks credit
-		const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
-        const text = this.add.text(400, 150,
-		`
-		 
-		 Score online belum tersedia.
-		 
-		 
-		Online scores are not yet available.`,
-		
-        {
+        // background
+        const bg = this.add.rectangle(400, 250, 600, 400, 0x000000, 0.8);
+
+        // judul
+        this.add.text(400, 80, "TOP 10 PLAYERS", {
+            fontSize: '28px',
+            fill: '#ffffff',
+			align: 'left'
+        }).setOrigin(0.5);
+
+        // loading text
+        const loadingText = this.add.text(400, 200, "Loading...", {
             fontSize: '20px',
             fill: '#ffffff',
-            align: 'center'		
-        })
-        .setOrigin(0.5);
+			align: 'left'
+        }).setOrigin(0.5);
 
-        //  tombol BACK
-        const backBtn = this.add.text(400, 280, 'BACK', {
-            fontSize: '24px',
-            fill: '#ffffff',
-            backgroundColor: '#000'
-        })
-        .setOrigin(0.5)
-        .setInteractive();
+        try {
+            const scores = await loadTopScores();
 
-        backBtn.on('pointerdown', () => {
-            this.scene.start('MainMenuScene');
-        });
+            // hapus loading
+            loadingText.destroy();
+
+            let y = 120;
+
+            if (scores.length === 0) {
+                this.add.text(400, 200, "Belum ada data score", {
+                    fontSize: '20px',
+                    fill: '#ffffff',
+					align: 'left'
+                }).setOrigin(0.5);
+            }
+
+            scores.forEach((player, index) => {
+
+                this.add.text(400, y,
+                    `${index + 1}. ${player.name} - ${player.bestScore}`,
+                    {
+                        fontSize: '20px',
+                        fill: '#ffffff',
+						align: 'left'
+                    }
+                ).setOrigin(0.5);
+
+                y += 25;
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            loadingText.setText("Gagal load score");
+
+        }
+
+    // tombol BACK
+    const backBtn = this.add.text(400, 360, 'BACK', {
+    fontSize: '24px',
+    fill: '#ffffff',
+    backgroundColor: '#000'
+	})
+	.setOrigin(0.5)
+	.setInteractive()
+	.setDepth(999); //  Biar paling atas
+
+     backBtn.on('pointerdown', () => {
+     this.scene.start('MainMenuScene');
+     });
 
     }
-}
+	}
+
+	export default ScoreScene;
 
 
 
@@ -1898,11 +1942,13 @@ class ScoreScene extends BaseScene {
 	this.player.anims.play('die', true);
 	this.obs3.anims.play('run', false);
 	this.obs3.anims.play('die', true);
-	this.player.setCrop(2, 0, 78, 80); 
+	this.player.setCrop(2, 2, 76, 80); 
+	this.obs3.setCrop(2, 2, 76, 80); 
+	//this.player.setCrop(2, 0, 78, 80); 
 	//shadow.y=player.y+300;
 	//shadow2 = false;
 	//delay: 1500;
-	saveScore(this.score);
+	saveScorex(this.score);
  //   if (Phaser.Input.Keyboard.JustDown(this.keyB)||this.btnsc) {
     this.speed=0;
 	this.penguin1=0;
