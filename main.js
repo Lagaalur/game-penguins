@@ -194,7 +194,7 @@ class BaseScene extends Phaser.Scene {
    
 	
 
-    this.titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin", {
+    this.titleText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.15, "Penguin X.Y", {
         //fontSize: "80px",
         fill: "#66CCFF",
         //fontStyle: "bold"
@@ -218,28 +218,7 @@ class BaseScene extends Phaser.Scene {
 		
     }).setOrigin(0.5);
 
-    this.startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.25, "Press 'A' to Start!!", {
-        fontSize: "15px",
-        //fill: "#00ffcc"
-		//fill: "#66CCFF",
-        //fontStyle: "bold"
-		
-		fontFamily: "Arial",
-        fill: "#AEEFFF",
-        fontStyle: "bold",
-        stroke: "#003344",
-        strokeThickness: 6,
-
-    shadow: {
-        offsetX: 2,
-        offsetY: 2,
-        color: "#000000",
-        blur: 4,
-        fill: true
-	
-		    }
-			
-    }).setOrigin(0.5);
+   
 
     // ===== GROUND =====
 	
@@ -393,7 +372,7 @@ class BaseScene extends Phaser.Scene {
     //player = this.physics.add.sprite(100, 200, 'player');
 	//player = this.physics.add.sprite(this.scale.height - 300, this.scale.width - 100, 'player');
 	this.player = this.physics.add.sprite(
-    this.scale.width * 0.5,   // 10% dari kiri
+    this.scale.width * 0.39,   // 10% dari kiri
     this.scale.height * 0.5,  // 70% dari atas (dekat ground)
     'player'
 	);
@@ -552,7 +531,7 @@ class BaseScene extends Phaser.Scene {
     });
 
     this.gameOver = true;
-    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
+    this.scoreText.setText("He died - Score: " + this.score + " ( Back to menu )");
 
 	});
 
@@ -606,7 +585,7 @@ class BaseScene extends Phaser.Scene {
     });
 
     this.gameOver = true;
-    this.scoreText.setText("He died - Score: " + this.score + " (Press B!)");
+    this.scoreText.setText("He died - Score: " + this.score + " ( Back to menu )");
 
 	});
 
@@ -659,7 +638,7 @@ class BaseScene extends Phaser.Scene {
     });
 
     this.gameOver = true;
-    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
+    this.scoreText.setText("He died - Score: " + this.score + " ( Back to menu )");
 
 	});
 
@@ -713,7 +692,7 @@ class BaseScene extends Phaser.Scene {
     });
 
     this.gameOver = true;
-    this.scoreText.setText("He died - Score: " + this.score + " (Press B)");
+    this.scoreText.setText("He died - Score: " + this.score + " ( Back to menu )");
 
 	});
 
@@ -909,7 +888,8 @@ class BaseScene extends Phaser.Scene {
     // ===== SCORE =====
 	
 	
-	this.scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + this.score + " penguin", {
+	//this.scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, "he save " + this.score + " penguin", {
+	this.scoreText = this.add.text(this.scale.width * 0.01, this.scale.height * 0.005, " ", {
     fontSize: "20px",
     //fontSize: "22px",
     //fill: "#00ffcc"
@@ -935,7 +915,7 @@ class BaseScene extends Phaser.Scene {
     callback: () => {
     if (!this.gameOver && this.gameStarted) {
                 
-    this.scoreText.setText("last he save " + this.score + " penguin");}
+    this.scoreText.setText("he save " + this.score + " penguin");}
 				        
     },
     loop: true
@@ -1206,36 +1186,249 @@ class BaseScene extends Phaser.Scene {
 
 
     create() {
-        this.createGame();
-		//  tombol START di tengah
-        const startBtn = this.add.text(400, 200, 'START GAME', {
-            fontSize: '32px',
-            fill: '#ffffff',
-            backgroundColor: '#1e90ff'
-        })
-        .setOrigin(0.5)
-        .setInteractive();
-
-        startBtn.on('pointerdown', () => {
-            this.scene.start('GameScene');
-		});
+    
+	this.createGame();
 	
-		// tombol CREDIT
-		const creditBtn = this.add.text(400, 260, 'CREDITS', {
-		fontSize: '28px',
-		fill: '#ffffff',
-		
-		//fill: '#000',
-        backgroundColor: '#1e90ff'
-		//backgroundColor: '#000'
-		})
-		.setOrigin(0.5)
-		.setInteractive();
+	
+	
+	//==================================== TOMBOL START (pakai variabel)
+	const boxX2 = 350;       // posisi X kotak (sama dengan CREDIT & HOW TO PLAY)
+	const boxY2 = 150;       // posisi Y kotak
+	const boxW2 = 100;       // lebar kotak (sama dengan CREDIT & HOW TO PLAY)
+	const boxH2 = 25;        // tinggi kotak (sama dengan CREDIT & HOW TO PLAY)
+	const radius2 = 8;       // radius sudut
 
-		creditBtn.on('pointerdown', () => {
-		this.scene.start('CreditScene');
-		});
-		}
+	// bikin graphics kotak
+	const box = this.add.graphics();
+	box.lineStyle(3, 0x000000, 1); // border hitam
+	box.fillStyle(0x1e90ff, 1);    // isi biru
+	box.fillRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+    box.strokeRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+
+	// bikin teks di tengah kotak
+	const label = this.add.text(
+    boxX2 + boxW2/2,       // tengah X
+    boxY2 + boxH2/2,       // tengah Y
+    'START',
+    {
+        fontSize: '18px',
+        fill: '#ffffff'
+    }
+	).setOrigin(0.5).setInteractive();
+
+	// efek hover
+	label.on('pointerover', () => {
+    box.clear();
+    box.lineStyle(3, 0xffffff, 1); // border putih
+    box.fillStyle(0x00bfff, 1);    // isi biru muda
+    box.fillRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+    box.strokeRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+
+    this.tweens.add({
+        targets: label,
+        scale: 1.1,
+        duration: 200,
+        yoyo: true
+    });
+	});
+
+	label.on('pointerout', () => {
+    box.clear();
+    box.lineStyle(3, 0x000000, 1); // border hitam lagi
+    box.fillStyle(0x1e90ff, 1);    // isi biru normal
+    box.fillRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+    box.strokeRoundedRect(boxX2, boxY2, boxW2, boxH2, radius2);
+
+    label.setScale(1);
+	});
+
+	// klik
+	label.on('pointerdown', () => {
+    this.scene.start('GameScene');
+	});
+	
+	
+	
+	//==================================== TOMBOL CREDIT (pakai variabel)
+	const boxX = 350;       // posisi X kotak
+	const boxY = 190;       // posisi Y kotak
+	const boxW = 100;       // lebar kotak
+	const boxH = 25;        // tinggi kotak
+	const radius = 8;       // radius sudut
+
+	// gambar kotak dengan border hitam
+	const graphics = this.add.graphics();
+	graphics.lineStyle(3, 0x000000, 1); // border hitam
+	graphics.fillStyle(0x1e90ff, 1);    // isi biru
+	graphics.fillRoundedRect(boxX, boxY, boxW, boxH, radius);
+	graphics.strokeRoundedRect(boxX, boxY, boxW, boxH, radius);
+
+	// teks otomatis di tengah kotak
+	const creditBtn = this.add.text(
+    boxX + boxW/2,       // tengah X
+    boxY + boxH/2,       // tengah Y
+    'CREDITS',
+    {
+        fontSize: '18px',
+        fill: '#ffffff'
+    }
+	).setOrigin(0.5).setInteractive();
+
+	// efek hover
+	creditBtn.on('pointerover', () => {
+    graphics.clear();
+    graphics.lineStyle(3, 0xffffff, 1); // border putih saat hover
+    graphics.fillStyle(0x00bfff, 1);    // isi biru muda
+    graphics.fillRoundedRect(boxX, boxY, boxW, boxH, radius);
+    graphics.strokeRoundedRect(boxX, boxY, boxW, boxH, radius);
+
+    this.tweens.add({
+        targets: creditBtn,
+        scale: 1.1,
+        duration: 200,
+        yoyo: true
+    });
+	});
+
+	creditBtn.on('pointerout', () => {
+    graphics.clear();
+    graphics.lineStyle(3, 0x000000, 1); // kembali border hitam
+    graphics.fillStyle(0x1e90ff, 1);    // isi biru normal
+    graphics.fillRoundedRect(boxX, boxY, boxW, boxH, radius);
+    graphics.strokeRoundedRect(boxX, boxY, boxW, boxH, radius);
+
+    creditBtn.setScale(1); // reset scale
+	});
+
+	// klik
+	creditBtn.on('pointerdown', () => {
+    this.scene.start('CreditScene');
+	});
+	
+	
+	
+	
+	
+	//==================================== TOMBOL HOW TO PLAY (pakai variabel)
+	const boxX1 = 350;       // posisi X kotak (sama dengan tombol CREDIT)
+	const boxY1 = 230;       // posisi Y kotak
+	const boxW1 = 100;       // lebar kotak (sama dengan tombol CREDIT)
+	const boxH1 = 25;        // tinggi kotak (sama dengan tombol CREDIT)
+	const radius1 = 8;       // radius sudut
+
+	// gambar kotak dengan border hitam
+	const graphicsHow = this.add.graphics();
+	graphicsHow.lineStyle(3, 0x000000, 1); // border hitam
+	graphicsHow.fillStyle(0x1e90ff, 1);    // isi biru
+	graphicsHow.fillRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+	graphicsHow.strokeRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+
+	// teks otomatis di tengah kotak
+	const howBtn = this.add.text(
+    boxX1 + boxW1/2,       // tengah X
+    boxY1 + boxH1/2,       // tengah Y
+    'RULES',
+    {
+        fontSize: '18px',
+        fill: '#ffffff'
+    }
+	).setOrigin(0.5).setInteractive();
+
+	// efek hover
+	howBtn.on('pointerover', () => {
+    graphicsHow.clear();
+    graphicsHow.lineStyle(3, 0xffffff, 1); // border putih saat hover
+    graphicsHow.fillStyle(0x00bfff, 1);    // isi biru muda
+    graphicsHow.fillRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+	graphicsHow.strokeRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+
+    this.tweens.add({
+        targets: howBtn,
+        scale: 1.1,
+        duration: 200,
+        yoyo: true
+    });
+	});
+
+	howBtn.on('pointerout', () => {
+    graphicsHow.clear();
+    graphicsHow.lineStyle(3, 0x000000, 1); // kembali border hitam
+    graphicsHow.fillStyle(0x1e90ff, 1);    // isi biru normal
+	graphicsHow.fillRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+	graphicsHow.strokeRoundedRect(boxX1, boxY1, boxW1, boxH1, radius1);
+    howBtn.setScale(1); // reset scale
+	});
+
+	// klik
+	howBtn.on('pointerdown', () => {
+    this.scene.start('RulesScane'); // nama scene HOW TO PLAY 
+	});
+	
+	
+	
+	//==================================== TOMBOL SCORE 
+	
+	
+	
+	
+	
+	const boxX3 = 350;       // posisi X kotak (sama dengan tombol HOW TO PLAY)
+	const boxY3 = 270;       // posisi Y kotak (dibawah HOW TO PLAY)
+	const boxW3 = 100;       // lebar kotak (sama dengan tombol CREDIT & HOW TO PLAY)
+	const boxH3 = 25;        // tinggi kotak (sama dengan tombol CREDIT & HOW TO PLAY)
+	const radius3 = 8;       // radius sudut
+
+	// gambar kotak dengan border hitam
+	const graphicsScore = this.add.graphics();
+	graphicsScore.lineStyle(3, 0x000000, 1); // border hitam
+	graphicsScore.fillStyle(0x1e90ff, 1);    // isi biru
+	graphicsScore.fillRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+    graphicsScore.strokeRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+
+	// teks otomatis di tengah kotak
+	const scoreBtn = this.add.text(
+    boxX3 + boxW3/2,       // tengah X
+    boxY3 + boxH3/2,       // tengah Y
+    'SCORE',
+    {
+        fontSize: '18px',
+        fill: '#ffffff'
+    }
+	).setOrigin(0.5).setInteractive();
+
+	// efek hover
+	scoreBtn.on('pointerover', () => {
+    graphicsScore.clear();
+    graphicsScore.lineStyle(3, 0xffffff, 1); // border putih saat hover
+    graphicsScore.fillStyle(0x00bfff, 1);    // isi biru muda
+    graphicsScore.fillRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+    graphicsScore.strokeRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+
+    this.tweens.add({
+        targets: scoreBtn,
+        scale: 1.1,
+        duration: 200,
+        yoyo: true
+    });
+	});
+
+	scoreBtn.on('pointerout', () => {
+    graphicsScore.clear();
+    graphicsScore.lineStyle(3, 0x000000, 1); // kembali border hitam
+    graphicsScore.fillStyle(0x1e90ff, 1);    // isi biru normal
+    graphicsScore.fillRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+    graphicsScore.strokeRoundedRect(boxX3, boxY3, boxW3, boxH3, radius3);
+
+    scoreBtn.setScale(1); // reset scale
+	});
+
+	// klik
+	scoreBtn.on('pointerdown', () => {
+	this.scene.start('ScoreScene'); 
+	});
+	
+	
+	}
 	
 	update()
 	{}
@@ -1299,6 +1492,134 @@ class BaseScene extends Phaser.Scene {
 }
 
 
+//===================================================================SCANE RULES===============================================================================
+
+
+
+   class RulesScane extends BaseScene {
+
+    constructor() {
+        super('RulesScane');
+    }
+
+
+    preload() {this.preloadGame();}
+
+
+    create() {
+             
+        //  background gelap transparan (biar kayak dialog)
+        // const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
+		this.createGame();
+        //  teks credit
+		const bg = this.add.rectangle(400, 200, 800, 350, 0x000000, 0.8);
+        const text = this.add.text(400, 150,
+		`
+		 
+Cara Main
+Gerakkan penguin menuju anak penguin di sisi kanan layar, 
+lalu bawa mereka ke sisi kiri layar sambil menghindari rintangan yang jatuh dari langit. 
+Selamatkan sebanyak mungkin anak penguin untuk mendapatkan skor tertinggi.
+
+						Kontrol
+						- Tombol A → Melompat
+						- Tombol B → Meningkatkan kecepatan
+						Selamat Bermain!🎮🐧
+
+Rules
+Move the penguin toward the baby penguins on the right side of the screen,
+then carry them back to the left side while avoiding obstacles falling from the sky.
+Rescue as many baby penguins as possible to achieve the highest score.
+
+						Controls
+						- Press A → Jump
+						- Press B → Increase speed
+						Have fun playing!🎮🐧`,
+		
+        {
+            fontSize: '12px',
+            fill: '#ffffff',
+            align: 'left'		
+        })
+        .setOrigin(0.5);
+		  // pastikan tombol MENU di atas elemen lain
+        //  tombol BACK
+        const backBtn = this.add.text(400, 280, 'BACK', {
+            fontSize: '24px',
+            fill: '#ffffff',
+            backgroundColor: '#000'
+        })
+        .setOrigin(0.5)
+        .setInteractive();
+		//backBtn.setDepth(9000000); 
+         backBtn.on('pointerdown', () => {
+            this.scene.start('MainMenuScene');
+        });
+
+    }
+}
+
+
+
+//=====================================SCANE SCORE======================================================
+
+
+
+class ScoreScene extends BaseScene {
+
+    constructor() {
+        super('ScoreScene');
+    }
+
+
+    preload() {this.preloadGame();}
+
+
+    create() {
+             
+        //  background gelap transparan (biar kayak dialog)
+        // const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
+		this.createGame();
+        //  teks credit
+		const bg = this.add.rectangle(400, 200, 500, 250, 0x000000, 0.8);
+        const text = this.add.text(400, 150,
+		`
+		 
+		 Score online belum tersedia.
+		 
+		 
+		Online scores are not yet available.`,
+		
+        {
+            fontSize: '20px',
+            fill: '#ffffff',
+            align: 'center'		
+        })
+        .setOrigin(0.5);
+
+        //  tombol BACK
+        const backBtn = this.add.text(400, 280, 'BACK', {
+            fontSize: '24px',
+            fill: '#ffffff',
+            backgroundColor: '#000'
+        })
+        .setOrigin(0.5)
+        .setInteractive();
+
+        backBtn.on('pointerdown', () => {
+            this.scene.start('MainMenuScene');
+        });
+
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -1334,17 +1655,96 @@ class BaseScene extends Phaser.Scene {
 
 	create() {this.createGame();
 	
-	const backBtn = this.add.text(this.sys.game.config.width - 10, 10, 'BACK TO MENU', {
-        fontSize: '28px',
-        fill: '#000',
-        backgroundColor: '#aeefff'
-    })
-    .setOrigin(1, 0) // anchor di kanan atas
-    .setInteractive();
+	
+	 this.startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.49, "Press ' A ' to Start!!", {
+        fontSize: "15px",
+        //fill: "#00ffcc"
+		//fill: "#66CCFF",
+        //fontStyle: "bold"
+		
+		fontFamily: "Arial",
+        fill: "#AEEFFF",
+        fontStyle: "bold",
+        stroke: "#003344",
+        strokeThickness: 6,
 
-    backBtn.on('pointerdown', () => {
-        this.scene.start('MainMenuScene');
+    shadow: {
+        offsetX: 2,
+        offsetY: 2,
+        color: "#000000",
+        blur: 4,
+        fill: true
+	
+		    }
+			
+    }).setOrigin(0.5);
+	
+	
+	
+	
+	
+	//==================================== TOMBOL MENU
+	//==================================== TOMBOL MENU (versi rapi)
+	//==================================== TOMBOL MENU (hitbox pas dengan kotak)
+	//==================================== TOMBOL MENU (hitbox pas)
+	//==================================== TOMBOL MENU (hitbox akurat)
+	//==================================== TOMBOL MENU (hitbox akurat)
+	const btnW = 80;   // lebar kotak
+	const btnH = 30;   // tinggi kotak
+	const margin = 10; // jarak dari tepi
+
+	// posisi kanan atas
+	const posX = this.sys.game.config.width - btnW - margin;
+	const posY = margin;
+
+	// gambar kotak mulai dari (0,0)
+	const backBox = this.add.graphics();
+	backBox.lineStyle(2, 0x000000, 1);
+	backBox.fillStyle(0xaeefff, 1);
+	backBox.fillRoundedRect(0, 0, btnW, btnH, 6);
+	backBox.strokeRoundedRect(0, 0, btnW, btnH, 6);
+
+	// teks di tengah kotak
+	const backLabel = this.add.text(btnW/2, btnH/2, 'MENU', {
+    fontSize: '18px',
+    fill: '#000000'
+	}).setOrigin(0.5);
+
+	// container di kanan atas
+	const backBtn = this.add.container(posX, posY, [backBox, backLabel])
+    .setSize(btnW, btnH)
+    .setInteractive(new Phaser.Geom.Rectangle(35, 10, 80, 30), Phaser.Geom.Rectangle.Contains);
+
+	// efek hover
+	backBtn.on('pointerover', () => {
+    backBox.clear();
+    backBox.lineStyle(2, 0xffffff, 1);
+    backBox.fillStyle(0x00bfff, 1);
+    backBox.fillRoundedRect(0, 0, btnW, btnH, 6);
+    backBox.strokeRoundedRect(0, 0, btnW, btnH, 6);
+
+    this.tweens.add({
+        targets: backBtn,
+        scale: 1.05,
+        duration: 150,
+        yoyo: true
     });
+	});
+
+	backBtn.on('pointerout', () => {
+    backBox.clear();
+    backBox.lineStyle(2, 0x000000, 1);
+    backBox.fillStyle(0xaeefff, 1);
+    backBox.fillRoundedRect(0, 0, btnW, btnH, 6);
+    backBox.strokeRoundedRect(0, 0, btnW, btnH, 6);
+
+    backBtn.setScale(1);
+	});
+
+	// klik
+	backBtn.on('pointerdown', () => {
+    this.scene.start('MainMenuScene');
+	});
 
 
     }  
@@ -1503,15 +1903,15 @@ class BaseScene extends Phaser.Scene {
 	//shadow2 = false;
 	//delay: 1500;
 	saveScore(this.score);
-    if (Phaser.Input.Keyboard.JustDown(this.keyB)||this.btnsc) {
+ //   if (Phaser.Input.Keyboard.JustDown(this.keyB)||this.btnsc) {
     this.speed=0;
 	this.penguin1=0;
 	this.penguin2=0;
 			
 			
-	this.scene.restart();
+//	this.scene.restart();
 			
-	}
+//	}
     return;
     }
 
@@ -1676,7 +2076,9 @@ class BaseScene extends Phaser.Scene {
     scene: [
     MainMenuScene,
 	GameScene, 
-	CreditScene
+	CreditScene,
+	RulesScane,
+	ScoreScene
     
 	//GameScene 
     //MainMenuScene
@@ -1684,21 +2086,6 @@ class BaseScene extends Phaser.Scene {
 	};
 
 	const game = new Phaser.Game(config);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
