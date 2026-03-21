@@ -248,123 +248,7 @@ class BaseScene extends Phaser.Scene {
 	floor.setVisible(false);
 
 
-   // ===== BUTTON =====
-
-	this.arrow = this.add.sprite(
-	this.scale.width * 0.85,
-	this.scale.height * 0.74,
-	'arrow'
-	);
-	this.arrow.setScale(0.6);
-	this.arrow.setFrame(1);
-	this.arrow.setDepth(1000);
-
-
-
-	let leftZone = this.add.zone(this.arrow.x - 80, this.arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
-    let rightZone = this.add.zone(this.arrow.x + 31, this.arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
-    let upZone = this.add.zone(this.arrow.x-30, this.arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
-    // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
-
-
-    // event untuk update flag
-    leftZone.on('pointerdown', () => { this.leftPressed = true; });
-    leftZone.on('pointerup', () => { this.leftPressed = false; });
-	leftZone.on('pointerout', () => { this.leftPressed = false; });
-	leftZone.on('pointercancel', () => { this.leftPressed = false; });
-
-    rightZone.on('pointerdown', () => { this.rightPressed = true; });
-    rightZone.on('pointerup', () => { this.rightPressed = false; });
-	rightZone.on('pointerout', () => { this.rightPressed = false; });
-	rightZone.on('pointercancel', () => { this.rightPressed = false; });
-
-    upZone.on('pointerdown', () => { this.upPressed = true; });
-    upZone.on('pointerup', () => { this.upPressed = false; });
-	upZone.on('pointerout', () => { this.upPressed = false; });
-	upZone.on('pointercancel', () => { this.upPressed = false; });
-
-  /*downZone.on('pointerdown', () => { downPressed = true; });
-    downZone.on('pointerup', () => { downPressed = false; });
-	downZone.on('pointerout', () => { downPressed = false; });
-	downZone.on('pointercancel', () => { downPressed = false; }); 
-
-    // optional: enable multi-touch
-    //this.input.addPointer(2);
-	*/
-
-	/*
-	buttonsa = this.add.sprite(
-    this.scale.width * 0.1,
-    this.scale.height * 0.75,
-    'button'
-	);
-	buttonsa.setScale(0.4);
-	buttonsa.setFrame(3);
-	buttonsa.setDepth(1000);
-
-
-	buttonsb = this.add.sprite(
-    this.scale.width * 0.18,
-    this.scale.height * 0.75,
-    'button'
-	);
-	buttonsb.setScale(0.4);
-	buttonsb.setFrame(2);
-	buttonsb.setDepth(4000);
-	*/
-
-	this.buttonsc = this.add.sprite(
-    this.scale.width * 0.16,
-    this.scale.height * 0.85,
-    'button'
-	);
-	this.buttonsc.setScale(0.7);
-	this.buttonsc.setFrame(5);
-	this.buttonsc.setDepth(1000);
-
-
-	this.buttonsd = this.add.sprite(
-    this.scale.width * 0.1,
-    this.scale.height * 0.70,
-    'button'
-	);
-	this.buttonsd.setScale(0.7);
-	this.buttonsd.setFrame(4);
-	this.buttonsd.setDepth(1000);
-
-
-	//buttonsa.setInteractive();
-	//buttonsb.setInteractive();
-	this.buttonsc.setInteractive();
-	this.buttonsd.setInteractive();
-	/*
-	buttonsa.on('pointerdown', () => {btnsa = true;});
-	buttonsa.on('pointerup', () => {btnsa = false;});
-	buttonsa.on('pointerout', () => { btnsa = false; });
-	buttonsa.on('pointercancel', () => { btnsa = false; });
-  
-  
-	buttonsb.on('pointerdown', () => {btnsb = true;});
-	buttonsb.on('pointerup', () => {btnsb = false;});
-	buttonsb.on('pointerout', () => { btnsb = false; });
-	buttonsb.on('pointercancel', () => { btnsb = false; });
-	//buttonsb.on('pointerover', () => { btnsb = true; });
-	*/
-
-	this.buttonsc.on('pointerdown', () => {this.btnsc = true;});
-	this.buttonsc.on('pointerup', () => {this.btnsc = false;});
-	this.buttonsc.on('pointerout', () => { this.btnsc = false; });
-	this.buttonsc.on('pointercancel', () => { this.btnsc = false; });
-
-
-	this.buttonsd.on('pointerdown', () => {this.btnsd = true;});
-	this.buttonsd.on('pointerup', () => {this.btnsd = false;});
-	this.buttonsd.on('pointerout', () => { this.btnsd = false; });
-	this.buttonsd.on('pointercancel', () => { this.btnsd = false; });
-
-
-
-	this.input.addPointer(10);
+   
 
 
     // ===== PLAYER =====
@@ -1700,6 +1584,128 @@ class ScoreScene extends BaseScene {
 	create() {this.createGame();
 	
 	
+	
+	
+	 // ===== BUTTON =====
+
+	this.arrow = this.add.sprite(
+	this.scale.width * 0.85,
+	this.scale.height * 0.74,
+	'arrow'
+	);
+	this.arrow.setScale(0.6);
+	this.arrow.setFrame(1);
+	this.arrow.setDepth(1000);
+
+
+
+	let leftZone = this.add.zone(this.arrow.x - 80, this.arrow.y-30, 58, 60).setOrigin(0,0).setInteractive();
+    let rightZone = this.add.zone(this.arrow.x + 31, this.arrow.y-30, 51, 60).setOrigin(0,0).setInteractive();
+    let upZone = this.add.zone(this.arrow.x-30, this.arrow.y - 80, 58, 60).setOrigin(0,0).setInteractive();
+    // let downZone = this.add.zone(arrow.x, arrow.y + 50, 100, 50).setOrigin(0,0).setInteractive();
+
+
+    // event untuk update flag
+    leftZone.on('pointerdown', () => { this.leftPressed = true; });
+    leftZone.on('pointerup', () => { this.leftPressed = false; });
+	leftZone.on('pointerout', () => { this.leftPressed = false; });
+	leftZone.on('pointercancel', () => { this.leftPressed = false; });
+
+    rightZone.on('pointerdown', () => { this.rightPressed = true; });
+    rightZone.on('pointerup', () => { this.rightPressed = false; });
+	rightZone.on('pointerout', () => { this.rightPressed = false; });
+	rightZone.on('pointercancel', () => { this.rightPressed = false; });
+
+    upZone.on('pointerdown', () => { this.upPressed = true; });
+    upZone.on('pointerup', () => { this.upPressed = false; });
+	upZone.on('pointerout', () => { this.upPressed = false; });
+	upZone.on('pointercancel', () => { this.upPressed = false; });
+
+  /*downZone.on('pointerdown', () => { downPressed = true; });
+    downZone.on('pointerup', () => { downPressed = false; });
+	downZone.on('pointerout', () => { downPressed = false; });
+	downZone.on('pointercancel', () => { downPressed = false; }); 
+
+    // optional: enable multi-touch
+    //this.input.addPointer(2);
+	*/
+
+	/*
+	buttonsa = this.add.sprite(
+    this.scale.width * 0.1,
+    this.scale.height * 0.75,
+    'button'
+	);
+	buttonsa.setScale(0.4);
+	buttonsa.setFrame(3);
+	buttonsa.setDepth(1000);
+
+
+	buttonsb = this.add.sprite(
+    this.scale.width * 0.18,
+    this.scale.height * 0.75,
+    'button'
+	);
+	buttonsb.setScale(0.4);
+	buttonsb.setFrame(2);
+	buttonsb.setDepth(4000);
+	*/
+
+	this.buttonsc = this.add.sprite(
+    this.scale.width * 0.16,
+    this.scale.height * 0.85,
+    'button'
+	);
+	this.buttonsc.setScale(0.7);
+	this.buttonsc.setFrame(5);
+	this.buttonsc.setDepth(1000);
+
+
+	this.buttonsd = this.add.sprite(
+    this.scale.width * 0.1,
+    this.scale.height * 0.70,
+    'button'
+	);
+	this.buttonsd.setScale(0.7);
+	this.buttonsd.setFrame(4);
+	this.buttonsd.setDepth(1000);
+
+
+	//buttonsa.setInteractive();
+	//buttonsb.setInteractive();
+	this.buttonsc.setInteractive();
+	this.buttonsd.setInteractive();
+	/*
+	buttonsa.on('pointerdown', () => {btnsa = true;});
+	buttonsa.on('pointerup', () => {btnsa = false;});
+	buttonsa.on('pointerout', () => { btnsa = false; });
+	buttonsa.on('pointercancel', () => { btnsa = false; });
+  
+  
+	buttonsb.on('pointerdown', () => {btnsb = true;});
+	buttonsb.on('pointerup', () => {btnsb = false;});
+	buttonsb.on('pointerout', () => { btnsb = false; });
+	buttonsb.on('pointercancel', () => { btnsb = false; });
+	//buttonsb.on('pointerover', () => { btnsb = true; });
+	*/
+
+	this.buttonsc.on('pointerdown', () => {this.btnsc = true;});
+	this.buttonsc.on('pointerup', () => {this.btnsc = false;});
+	this.buttonsc.on('pointerout', () => { this.btnsc = false; });
+	this.buttonsc.on('pointercancel', () => { this.btnsc = false; });
+
+
+	this.buttonsd.on('pointerdown', () => {this.btnsd = true;});
+	this.buttonsd.on('pointerup', () => {this.btnsd = false;});
+	this.buttonsd.on('pointerout', () => { this.btnsd = false; });
+	this.buttonsd.on('pointercancel', () => { this.btnsd = false; });
+
+
+
+	this.input.addPointer(10);
+	
+	
+
 	 this.startText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.49, "Press ' A ' to Start!!", {
         fontSize: "15px",
         //fill: "#00ffcc"
