@@ -134,7 +134,13 @@ class BaseScene extends Phaser.Scene {
 	
 	
 	
-	this.load.image('view', 'assets/view.png')
+	this.load.image('view', 'assets/view.png');
+	
+	this.load.image('ground1', 'assets/ground1.png');
+	
+	this.load.image('ground2', 'assets/ground2.png');
+	
+	this.load.image('ground3', 'assets/ground3.png');
 
     this.load.spritesheet('player', 'assets/player.png', {
         frameWidth: 80,
@@ -234,7 +240,7 @@ class BaseScene extends Phaser.Scene {
 
 	*/
 
-
+    /*
 	this.ground = this.physics.add.staticGroup();
 
 	let floor = this.add.rectangle(
@@ -250,8 +256,47 @@ class BaseScene extends Phaser.Scene {
 
 	floor.setVisible(false);
 
+    */
+	 
+	 
 
-   
+	this.ground = this.physics.add.staticGroup();
+
+	// --- Floor tetap ---
+	let floor = this.add.rectangle(
+    this.scale.width / 2,
+    this.scale.height - 100,
+    this.scale.width,
+    10,
+    0x654321
+	);
+	this.physics.add.existing(floor, true);
+	this.ground.add(floor);
+	floor.setVisible(false);
+
+	// --- Extra ground ---
+	// 1. pakai add.sprite + add.existing (true)
+	const extraGrounds = [
+    { x: 40,  y: 120, key: 'ground1', scale: 0.2 },
+    { x: 770, y: 120, key: 'ground3', scale: 0.2 },
+    { x: 400, y: 140, key: 'ground3', scale: 0.2 }
+	];
+
+	extraGrounds.forEach(g => {
+    let ground = this.add.sprite(g.x, g.y, g.key); // visual
+    ground.setOrigin(0.5, 0.5);
+    ground.setScale(g.scale);
+
+    this.physics.add.existing(ground, true); // physics STATIC → tidak jatuh
+    this.ground.add(ground); // tambahkan ke group (opsional, untuk manajemen)
+	});
+
+// --- Collider player tetap pakai floor yang lama ---
+
+
+
+
+
 
 
     // ===== PLAYER =====
@@ -1543,21 +1588,6 @@ class ScoreScene extends BaseScene {
 	}
 
 	export default ScoreScene;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
