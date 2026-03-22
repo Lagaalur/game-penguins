@@ -106,11 +106,14 @@ class BaseScene extends Phaser.Scene {
 	this.speed=0;
 	this.penguin1=0;
 	this.penguin2=0;
-	this.animasiplayer; }
-	score=this.schor
+	this.animasiplayer; 
+	//score=this.schore;
+	this.scoreSaved = false;
+	this.obs3Scored = false;
+	this.prevObs3X ;
 	//PRELOAD
 	
-	
+	}
 	
 	
 	
@@ -1318,7 +1321,7 @@ class BaseScene extends Phaser.Scene {
 	{}
 	}
    
-   //================================================================CREDIT=================================================================================
+   //================================================================CREDIT SCANE =================================================================================
 
 
 
@@ -1583,7 +1586,7 @@ class ScoreScene extends BaseScene {
 
 	create() {this.createGame();
 	
-	
+	//this.prevObs3X = this.obs3.x;
 	
 	
 	 // ===== BUTTON =====
@@ -1876,11 +1879,15 @@ class ScoreScene extends BaseScene {
         return;
     }
 	
+	///// panggil anak penguin
 	
 	if (this.penguin2==0) {
+	this.obs3Scored = false;
+	
     this.spawnObstacle3.call(this);
     this.spawn3Done = true; // pastikan hanya sekali
 	this.obs3.timerStarted = false;
+	this.prevObs3X = this.obs3.x;
     }
 	
 	
@@ -1919,16 +1926,18 @@ class ScoreScene extends BaseScene {
     }
 	}
    
-
-
-	if (this.obs3.x <= 50 && !this.obs3.timerStarted)
+    //Tambah score
+    //if (this.obs3.x <= 50 && !this.obs3.timerStarted)
+	if (this.prevObs3X > 50 && this.obs3.x <= 50 && !this.obs3Scored)
 	{     
     // Set kecepatan dan state
+	this.obs3Scored = true;
     this.obs3.body.velocity.x = -100;
     this.penguin2 = 0;
     this.obs3.following = false;
     this.penguin1 = 1;
-    this.score++;
+	if (!this.gameOver) {
+    this.score++; }
     // Tandai bahwa timer sudah dimulai supaya tidak terulang tiap frame
     this.obs3.timerStarted = true;
 
@@ -1940,7 +1949,7 @@ class ScoreScene extends BaseScene {
     }, [], this);
 	}
 
-
+     this.prevObs3X = this.obs3.x;
 
     if (this.gameOver) {
 		
@@ -1954,12 +1963,19 @@ class ScoreScene extends BaseScene {
 	//shadow.y=player.y+300;
 	//shadow2 = false;
 	//delay: 1500;
+	
+	if(!this.scoreSaved){
 	saveScorex(this.score);
+	this.scoreSaved = true;
+	}
+	
+	
  //   if (Phaser.Input.Keyboard.JustDown(this.keyB)||this.btnsc) {
     this.speed=0;
 	this.penguin1=0;
 	this.penguin2=0;
-			
+	this.obs3Scored = false;
+	this.prevObs3X = this.obs3.x;		
 			
 //	this.scene.restart();
 			
@@ -2063,6 +2079,7 @@ class ScoreScene extends BaseScene {
     });
 
     this.lastArrowFrame = arrowFrame;
+	console.log("SCORE:", this.score);
 	
 	}}}
 
@@ -2157,4 +2174,4 @@ class ScoreScene extends BaseScene {
     return min + (array[0] % range);
 	}
 	
-
+     
